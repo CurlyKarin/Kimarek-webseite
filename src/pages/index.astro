@@ -1,0 +1,109 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { verein } from '../config';
+
+const start = await getEntry('seiten', 'start');
+if (!start) {
+  throw new Error('Startseite fehlt');
+}
+const { Content } = await render(start);
+const termine = await getCollection('termine');
+const aktuell = termine.sort((a, b) => b.data.year - a.data.year)[0];
+const terminText = aktuell ? await render(aktuell) : null;
+const TerminInhalt = terminText?.Content;
+---
+
+<Base title={verein.name} description={start.data.description}>
+  <div class="wrap hero">
+    <div>
+      <p class="kicker">{start.data.kicker}</p>
+      <h1>Eine Woche unter dem Chapiteau.</h1>
+      <div class="lead">
+        <Content />
+      </div>
+      <div class="actions">
+        {
+          aktuell && (
+            <a class="button" href={aktuell.data.portal}>
+              Zum Anmeldeportal
+            </a>
+          )
+        }
+        <a class="button-quiet" href="/kinderwoche">So läuft die Woche</a>
+      </div>
+    </div>
+    {
+      aktuell && (
+        <article class="ticket">
+          <header>
+            <h2>{aktuell.data.title}</h2>
+            <p>Anmeldung nur über das Portal.</p>
+          </header>
+          {aktuell.data.wochen.map((woche) => (
+            <div class="ticket-row">
+              <h3>{woche.name}</h3>
+              <div class="alter">{woche.alter}</div>
+              <p class="when">
+                Anreise {woche.anreise}
+                <br />
+                Abreise {woche.abreise}
+              </p>
+              <ul class="shows">
+                {woche.vorstellungen.map((show) => (
+                  <li>{show}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          <div class="note">
+            {TerminInhalt && <TerminInhalt />}
+          </div>
+        </article>
+      )
+    }
+  </div>
+
+  <section class="wrap band">
+    <h2>Was eine Kimarek-Woche ausmacht</h2>
+    <div class="trio">
+      <article>
+        <h3>Die Manege</h3>
+        <p>
+          Jedes Kind sucht sich eine Artistengruppe aus: Geräteturnen, Bodenakrobatik, Jonglage, Feuerspucken und mehr.
+          Am Ende der Woche stehen Premiere und Gala.
+        </p>
+        <a href="/ablauf">Zum Ablauf</a>
+      </article>
+      <article>
+        <h3>Das Zeltlager</h3>
+        <p>
+          Geschlafen wird in Zeltgruppen, gekocht vom Küchenteam. Dazwischen gibt es Spiele, Disco, Lagerfeuer und das Kimarek-Burger-Essen.
+        </p>
+        <a href="/zelt">Das Chapiteau</a>
+      </article>
+      <article>
+        <h3>Das Team</h3>
+        <p>
+          Rund 30 Betreuende tragen eine Kinderwoche. Wer zwischen 17 und 35 ist und mitmachen will, schreibt an {verein.mail}.
+        </p>
+        <a href="/betreuer">Betreuer werden</a>
+      </article>
+    </div>
+    <div class="home-extra">
+      <figure class="sponsor">
+        <img
+          src="/media/zukunftsfonds.jpg"
+          alt="Dieses Projekt wird gefördert durch die Stiftung Zukunftsfonds Asse"
+          width="880"
+          height="880"
+        />
+      </figure>
+      <article class="panel">
+        <h2>Auf Facebook</h2>
+        <p>Fotos, Neuigkeiten und aktuelle Hinweise aus dem Zirkusjahr stehen auf der Facebook-Seite.</p>
+        <a class="button" href={verein.facebook}>Zur Facebook-Seite</a>
+      </article>
+    </div>
+  </section>
+</Base>

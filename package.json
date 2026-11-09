@@ -1,0 +1,16 @@
+{
+  "name": "kimarek-webseite",
+  "private": true,
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@fontsource/fredoka": "^5.2.8",
+    "@fontsource/source-sans-3": "^5.2.9",
+    "astro": "^5.16.0"
+  }
+}

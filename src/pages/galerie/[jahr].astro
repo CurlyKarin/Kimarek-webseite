@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const jahre = await getCollection('jahre');
+  return jahre.map((jahr) => ({
+    params: { jahr: String(jahr.data.year) },
+    props: { jahr },
+  }));
+}
+
+const { jahr } = Astro.props;
+const jahre = (await getCollection('jahre')).sort((a, b) => b.data.year - a.data.year);
+---
+
+<Base title={String(jahr.data.year)} description={`Kimarek-Galerie ${jahr.data.year}`}>
+  <div class="wrap">
+    <header class="page-head">
+      <p class="kicker">
+        <a href="/galerie">Galerie</a>
+      </p>
+      <h1>{jahr.data.year}</h1>
+    </header>
+    {
+      jahr.data.alben.map((album) => (
+        <section class="album">
+          <h2>{album.titel}</h2>
+          <p>
+            {album.fotos === 1
+              ? 'In der bisherigen Galerie lag hier 1 Foto.'
+              : `In der bisherigen Galerie lagen hier ${album.fotos} Fotos.`}
+            Die Bilder folgen, sobald sie im Speicher des Vereins liegen.
+          </p>
+        </section>
+      ))
+    }
+    <nav class="footer-links" aria-label="Weitere Jahre" style="padding: 1rem 0 3rem;">
+      {
+        jahre.map((eintrag) => (
+          <a
+            href={`/galerie/${eintrag.data.year}`}
+            aria-current={eintrag.data.year === jahr.data.year ? 'page' : undefined}
+          >
+            {eintrag.data.year}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</Base>

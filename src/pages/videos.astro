@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+
+const videos = (await getCollection('videos')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title="Videos" description="Filme vom Kinderzirkus Kimarek.">
+  <div class="wrap">
+    <header class="page-head">
+      <p class="kicker">Galerie</p>
+      <h1>Videos</h1>
+    </header>
+    <div class="prose">
+      <p>
+        Die Filme starten erst, wenn du sie abspielst. Dann wird eine Verbindung zu YouTube aufgebaut. Mehr dazu steht in der
+        <a href="/datenschutz">Datenschutzerklärung</a>.
+      </p>
+    </div>
+    <div class="videos">
+      {
+        videos.map((video) => (
+          <article class="video-card">
+            <button
+              class="video-start"
+              type="button"
+              data-youtube={video.data.youtubeId}
+              data-title={video.data.title}
+            >
+              {video.data.title}
+              <span>Abspielen</span>
+            </button>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</Base>
+
+<script>
+  document.querySelectorAll('.video-start').forEach((button) => {
+    button.addEventListener('click', () => {
+      if (!(button instanceof HTMLButtonElement)) return;
+      const id = button.dataset.youtube ?? '';
+      if (!/^[a-zA-Z0-9_-]{6,}$/.test(id)) return;
+      const frame = document.createElement('iframe');
+      frame.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`;
+      frame.title = button.dataset.title || 'Video';
+      frame.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      frame.allowFullscreen = true;
+      button.replaceWith(frame);
+    });
+  });
+</script>

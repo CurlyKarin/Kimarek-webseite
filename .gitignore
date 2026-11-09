@@ -1,0 +1,7 @@
+# Quellmaterial der alten Seite. Kann personenbezogene Daten und große Bilder enthalten.
+_quelle/
+
+node_modules/
+dist/
+.astro/
+.DS_Store

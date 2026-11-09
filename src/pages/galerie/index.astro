@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { pfad } from '../../lib/pfad';
 
 const jahre = (await getCollection('jahre')).sort((a, b) => b.data.year - a.data.year);
 ---
@@ -23,7 +24,7 @@ const jahre = (await getCollection('jahre')).sort((a, b) => b.data.year - a.data
     <div class="year-grid">
       {
         jahre.map((jahr) => (
-          <a class="year-card" href={`/galerie/${jahr.data.year}`}>
+          <a class="year-card" href={pfad(`/galerie/${jahr.data.year}`)}>
             <strong>{jahr.data.year}</strong>
             <span>
               {jahr.data.alben.length} {jahr.data.alben.length === 1 ? 'Album' : 'Alben'}

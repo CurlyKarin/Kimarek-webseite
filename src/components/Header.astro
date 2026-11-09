@@ -1,5 +1,6 @@
 ---
 import { isCurrent, navigation } from '../data/nav';
+import { pfad } from '../lib/pfad';
 
 interface Props {
   portal?: string;
@@ -12,8 +13,8 @@ const path = Astro.url.pathname;
 <header class="site-header">
   <div class="valance" aria-hidden="true"></div>
   <div class="wrap header-bar">
-    <a class="brand" href="/">
-      <img src="/media/kimarek.png" alt="Kinderzirkus Kimarek" width="280" height="187" />
+    <a class="brand" href={pfad('/')}>
+      <img src={pfad('/media/kimarek.png')} alt="Kinderzirkus Kimarek" width="280" height="187" />
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
       Menü
@@ -27,7 +28,7 @@ const path = Astro.url.pathname;
               <ul>
                 {item.children.map((child) => (
                   <li>
-                    <a href={child.href} aria-current={isCurrent(path, child.href) ? 'page' : undefined}>
+                    <a href={pfad(child.href)} aria-current={isCurrent(path, child.href) ? 'page' : undefined}>
                       {child.label}
                     </a>
                   </li>
@@ -35,7 +36,7 @@ const path = Astro.url.pathname;
               </ul>
             </details>
           ) : (
-            <a class="nav-link" href={item.href}>
+            <a class="nav-link" href={item.href ? pfad(item.href) : undefined}>
               {item.label}
             </a>
           ),

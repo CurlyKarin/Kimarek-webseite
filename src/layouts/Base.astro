@@ -7,6 +7,7 @@ import { getCollection } from 'astro:content';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { verein, vorschau } from '../config';
+import { pfad } from '../lib/pfad';
 import '../styles/global.css';
 
 interface Props {
@@ -29,10 +30,10 @@ const documentTitle = title === verein.name ? title : `${title} · ${verein.name
     <meta name="description" content={description} />
     {vorschau && <meta name="robots" content="noindex, nofollow" />}
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" href="/favicon.ico" />
+    <link rel="icon" href={pfad('/favicon.ico')} />
     <title>{documentTitle}</title>
   </head>
-  <body>
+  <body style={`--zelt: url('${pfad('/media/zelt.jpg')}')`}>
     <a class="skip" href="#inhalt">Zum Inhalt</a>
     <Header portal={portal} />
     <main id="inhalt">

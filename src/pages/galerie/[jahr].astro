@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import { pfad } from '../../lib/pfad';
 
 export async function getStaticPaths() {
   const jahre = await getCollection('jahre');
@@ -18,7 +19,7 @@ const jahre = (await getCollection('jahre')).sort((a, b) => b.data.year - a.data
   <div class="wrap">
     <header class="page-head">
       <p class="kicker">
-        <a href="/galerie">Galerie</a>
+        <a href={pfad('/galerie')}>Galerie</a>
       </p>
       <h1>{jahr.data.year}</h1>
     </header>
@@ -39,7 +40,7 @@ const jahre = (await getCollection('jahre')).sort((a, b) => b.data.year - a.data
       {
         jahre.map((eintrag) => (
           <a
-            href={`/galerie/${eintrag.data.year}`}
+            href={pfad(`/galerie/${eintrag.data.year}`)}
             aria-current={eintrag.data.year === jahr.data.year ? 'page' : undefined}
           >
             {eintrag.data.year}

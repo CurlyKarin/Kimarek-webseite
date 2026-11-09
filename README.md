@@ -2,7 +2,7 @@
 
 Neue Website für [kimarek.de](https://www.kimarek.de), gebaut mit [Astro](https://astro.build). Die Texte stammen aus der bisherigen Seite. Die Fotos der Jahresgalerien sind bewusst nicht in diesem Repository.
 
-Solange in `src/config.ts` der Wert `vorschau` auf `true` steht, weist die Seite Suchmaschinen ab. Eine `CNAME`-Datei gibt es hier nicht: Die Domain bleibt beim bisherigen GitHub-Pages-Account, bis der Verein dieses Repository übernimmt.
+Solange in `src/config.ts` der Wert `vorschau` auf `true` steht, weist die Seite Suchmaschinen ab. Eine `CNAME`-Datei gibt es hier nicht: Die Domain bleibt beim bisherigen GitHub-Pages-Account, bis der Verein dieses Repository übernimmt. Die öffentliche Vorschau liegt unter [curlykarin.github.io/Kimarek-webseite](https://curlykarin.github.io/Kimarek-webseite/).
 
 ## Lokal ansehen
 

@@ -3,6 +3,7 @@ import { getCollection, getEntry, render } from 'astro:content';
 import Countdown from '../components/Countdown.astro';
 import Base from '../layouts/Base.astro';
 import { verein } from '../config';
+import { pfad } from '../lib/pfad';
 
 const start = await getEntry('seiten', 'start');
 if (!start) {
@@ -32,7 +33,7 @@ const TerminInhalt = terminText?.Content;
             </a>
           )
         }
-        <a class="button-quiet" href="/kinderwoche">So läuft die Woche</a>
+        <a class="button-quiet" href={pfad('/kinderwoche')}>So läuft die Woche</a>
       </div>
     </div>
     {
@@ -75,27 +76,27 @@ const TerminInhalt = terminText?.Content;
           Jedes Kind sucht sich eine Artistengruppe aus: Geräteturnen, Bodenakrobatik, Jonglage, Feuerspucken und mehr.
           Am Ende der Woche stehen Premiere und Gala.
         </p>
-        <a href="/ablauf">Zum Ablauf</a>
+        <a href={pfad('/ablauf')}>Zum Ablauf</a>
       </article>
       <article>
         <h3>Das Zeltlager</h3>
         <p>
           Geschlafen wird in Zeltgruppen, gekocht vom Küchenteam. Dazwischen gibt es Spiele, Disco, Lagerfeuer und das Kimarek-Burger-Essen.
         </p>
-        <a href="/zelt">Das Chapiteau</a>
+        <a href={pfad('/zelt')}>Das Chapiteau</a>
       </article>
       <article>
         <h3>Das Team</h3>
         <p>
           Rund 30 Betreuende tragen eine Kinderwoche. Wer zwischen 17 und 35 ist und mitmachen will, schreibt an {verein.mail}.
         </p>
-        <a href="/betreuer">Betreuer werden</a>
+        <a href={pfad('/betreuer')}>Betreuer werden</a>
       </article>
     </div>
     <div class="home-extra">
       <figure class="sponsor">
         <img
-          src="/media/zukunftsfonds.jpg"
+          src={pfad('/media/zukunftsfonds.jpg')}
           alt="Dieses Projekt wird gefördert durch die Stiftung Zukunftsfonds Asse"
           width="880"
           height="880"

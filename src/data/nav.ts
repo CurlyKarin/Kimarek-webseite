@@ -1,3 +1,5 @@
+import { pfad } from '../lib/pfad';
+
 export type NavLink = {
   href: string;
   label: string;
@@ -42,5 +44,7 @@ export const navigation: NavItem[] = [
 ];
 
 export function isCurrent(pathname: string, href: string) {
-  return pathname === href || pathname === `${href}/`;
+  const ziel = pfad(href).replace(/\/$/, '') || '/';
+  const hier = pathname.replace(/\/$/, '') || '/';
+  return hier === ziel;
 }

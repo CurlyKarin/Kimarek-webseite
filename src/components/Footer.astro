@@ -11,23 +11,14 @@ const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-row">
-      <div>
-        <strong>{verein.name}</strong>
-        <div class="footer-links">
-          <a href={verein.telefonHref}>{verein.telefon}</a>
-          <a href={`mailto:${verein.mail}`}>{verein.mail}</a>
-        </div>
-      </div>
-      <nav class="footer-links" aria-label="Service">
-        {portal && <a href={portal}>Anmeldeportal</a>}
-        <a href={verein.facebook}>Facebook</a>
-        <a href={pfad('/kontakt')}>Kontakt</a>
-        <a href={pfad('/datenschutz')}>Datenschutz</a>
-        <a href={pfad('/impressum')}>Impressum</a>
-      </nav>
-    </div>
+  <div class="wrap footer-row">
     <p class="fine">© {year} {verein.name}</p>
+    <nav class="footer-links" aria-label="Service">
+      {portal && <a href={portal}>Anmeldeportal</a>}
+      <a href={verein.facebook}>Facebook</a>
+      <a href={pfad('/kontakt')}>Kontakt</a>
+      <a href={pfad('/datenschutz')}>Datenschutz</a>
+      <a href={pfad('/impressum')}>Impressum</a>
+    </nav>
   </div>
 </footer>

@@ -686,6 +686,36 @@ h1 {
   margin-inline: auto;
 }
 
+.facebook-card {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr;
+  gap: 0.9rem;
+  align-items: center;
+  margin-top: 0.85rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.facebook-card img {
+  width: 5.5rem;
+  height: 5.5rem;
+  object-fit: cover;
+}
+
+.facebook-card strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.2rem;
+  line-height: 1.2;
+}
+
+.facebook-card span span {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--ink-soft);
+}
+
 .site-footer {
   background: var(--blue-deep);
   color: #fff6e4;

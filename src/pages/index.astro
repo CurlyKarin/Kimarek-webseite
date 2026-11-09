@@ -104,8 +104,13 @@ const TerminInhalt = terminText?.Content;
       </figure>
       <article class="panel">
         <h2>Auf Facebook</h2>
-        <p>Fotos, Neuigkeiten und aktuelle Hinweise aus dem Zirkusjahr stehen auf der Facebook-Seite.</p>
-        <a class="button" href={verein.facebook}>Zur Facebook-Seite</a>
+        <a class="facebook-card" href={verein.facebook}>
+          <img src={pfad('/media/facebook.png')} alt="" width="200" height="200" />
+          <span>
+            <strong>Kinderzirkus Kimarek</strong>
+            <span>{verein.facebookInfo}</span>
+          </span>
+        </a>
       </article>
     </div>
   </section>

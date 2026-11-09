@@ -1,5 +1,6 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
+import Countdown from '../components/Countdown.astro';
 import Base from '../layouts/Base.astro';
 import { verein } from '../config';
 
@@ -22,6 +23,7 @@ const TerminInhalt = terminText?.Content;
       <div class="lead">
         <Content />
       </div>
+      <Countdown saisons={termine.map((termin) => ({ year: termin.data.year, saisonEnde: termin.data.saisonEnde }))} />
       <div class="actions">
         {
           aktuell && (

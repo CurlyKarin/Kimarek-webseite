@@ -19,7 +19,7 @@ Alles, was der Vorstand später pflegen soll, liegt als Markdown unter `src/cont
 
 | Ordner | Inhalt |
 | --- | --- |
-| `termine` | Jahreszahlen, Wochen und Link zum Anmeldeportal |
+| `termine` | Jahreszahlen, Wochen, Link zum Anmeldeportal und `saisonEnde`, der letzte Ferientag. Die Anmeldung startet immer am 1. Februar um 9 Uhr; der Countdown läuft bis dahin und beginnt erst nach `saisonEnde` neu. Solange die Anmeldung offen ist, steht das anstelle der Zahlen. |
 | `seiten` | Texte der Unterseiten |
 | `aufstellungen` | Vorstandsfotos und die Zeile „von links nach rechts“ |
 | `jahre` | Galerie-Jahre und die Anzahl der vorhandenen Fotos |

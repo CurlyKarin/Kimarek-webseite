@@ -1,0 +1,144 @@
+---
+import type { Saison } from '../lib/anmeldung';
+
+interface Props {
+  saisons: Saison[];
+}
+
+const { saisons } = Astro.props;
+---
+
+<section class="countdown" data-saisons={JSON.stringify(saisons)} aria-labelledby="countdown-titel">
+  <div class="countdown-head">
+    <h2 id="countdown-titel" data-titel>Countdown zur Anmeldung</h2>
+    <p class="countdown-when" data-when></p>
+  </div>
+  <ol class="countdown-units" data-units>
+    <li>
+      <strong>
+        <svg viewBox="0 0 36 36" aria-hidden="true">
+          <circle class="ring-track" cx="18" cy="18" r="15.5" pathLength="100"></circle>
+          <circle class="ring-value" data-ring="tage" cx="18" cy="18" r="15.5" pathLength="100"></circle>
+        </svg>
+        <span data-tage>--</span>
+      </strong>
+      <span data-tage-label>Tage</span>
+    </li>
+    <li>
+      <strong>
+        <svg viewBox="0 0 36 36" aria-hidden="true">
+          <circle class="ring-track" cx="18" cy="18" r="15.5" pathLength="100"></circle>
+          <circle class="ring-value" data-ring="stunden" cx="18" cy="18" r="15.5" pathLength="100"></circle>
+        </svg>
+        <span data-stunden>--</span>
+      </strong>
+      <span data-stunden-label>Stunden</span>
+    </li>
+    <li>
+      <strong>
+        <svg viewBox="0 0 36 36" aria-hidden="true">
+          <circle class="ring-track" cx="18" cy="18" r="15.5" pathLength="100"></circle>
+          <circle class="ring-value" data-ring="minuten" cx="18" cy="18" r="15.5" pathLength="100"></circle>
+        </svg>
+        <span data-minuten>--</span>
+      </strong>
+      <span data-minuten-label>Minuten</span>
+    </li>
+    <li>
+      <strong>
+        <svg viewBox="0 0 36 36" aria-hidden="true">
+          <circle class="ring-track" cx="18" cy="18" r="15.5" pathLength="100"></circle>
+          <circle class="ring-value" data-ring="sekunden" cx="18" cy="18" r="15.5" pathLength="100"></circle>
+        </svg>
+        <span data-sekunden>--</span>
+      </strong>
+      <span data-sekunden-label>Sekunden</span>
+    </li>
+  </ol>
+  <p class="countdown-sr" data-sr role="status"></p>
+</section>
+
+<script>
+  import { phase, restzeit, uhrzeitText, type Saison } from '../lib/anmeldung';
+
+  const wurzel = document.querySelector<HTMLElement>('.countdown');
+  const roh = wurzel?.dataset.saisons;
+  if (wurzel && roh) {
+    const saisons = JSON.parse(roh) as Saison[];
+    const titel = wurzel.querySelector<HTMLElement>('[data-titel]');
+    const units = wurzel.querySelector<HTMLElement>('[data-units]');
+    const when = wurzel.querySelector<HTMLElement>('[data-when]');
+    const sr = wurzel.querySelector<HTMLElement>('[data-sr]');
+    const felder = {
+      tage: wurzel.querySelector<HTMLElement>('[data-tage]'),
+      stunden: wurzel.querySelector<HTMLElement>('[data-stunden]'),
+      minuten: wurzel.querySelector<HTMLElement>('[data-minuten]'),
+      sekunden: wurzel.querySelector<HTMLElement>('[data-sekunden]'),
+      tageLabel: wurzel.querySelector<HTMLElement>('[data-tage-label]'),
+      stundenLabel: wurzel.querySelector<HTMLElement>('[data-stunden-label]'),
+      minutenLabel: wurzel.querySelector<HTMLElement>('[data-minuten-label]'),
+      sekundenLabel: wurzel.querySelector<HTMLElement>('[data-sekunden-label]'),
+    };
+
+    const einheit = (zahl: number, einer: string, mehrere: string) => (zahl === 1 ? einer : mehrere);
+    const zweistellig = (zahl: number) => String(zahl).padStart(2, '0');
+    const ring = (name: string, anteil: number) => {
+      const kreis = wurzel.querySelector(`[data-ring="${name}"]`);
+      if (!kreis) return;
+      const rest = Math.min(1, Math.max(0, anteil));
+      kreis.setAttribute('stroke-dashoffset', String(100 * (1 - rest)));
+    };
+    let letzteMinute = '';
+
+    const zeichnen = (jetzt = Date.now()) => {
+      const stand = phase(jetzt, saisons);
+
+      if (stand.art === 'offen') {
+        if (titel) titel.textContent = `Die Anmeldung ${stand.jahr} ist offen.`;
+        units?.setAttribute('hidden', '');
+        if (when) when.textContent = `Seit dem ${uhrzeitText(stand.seit)}, nur über das Portal.`;
+        const satz = `Die Anmeldung für ${stand.jahr} ist seit dem ${uhrzeitText(stand.seit)} offen.`;
+        if (sr && sr.textContent !== satz) sr.textContent = satz;
+        letzteMinute = '';
+        return;
+      }
+
+      if (titel) titel.textContent = `Countdown zur Anmeldung ${stand.jahr}`;
+      units?.removeAttribute('hidden');
+      const rest = restzeit(stand.ziel - jetzt);
+      if (felder.tage) felder.tage.textContent = String(rest.tage);
+      if (felder.stunden) felder.stunden.textContent = zweistellig(rest.stunden);
+      if (felder.minuten) felder.minuten.textContent = zweistellig(rest.minuten);
+      if (felder.sekunden) felder.sekunden.textContent = zweistellig(rest.sekunden);
+      if (felder.tageLabel) felder.tageLabel.textContent = einheit(rest.tage, 'Tag', 'Tage');
+      if (felder.stundenLabel) felder.stundenLabel.textContent = einheit(rest.stunden, 'Stunde', 'Stunden');
+      if (felder.minutenLabel) felder.minutenLabel.textContent = einheit(rest.minuten, 'Minute', 'Minuten');
+      if (felder.sekundenLabel) felder.sekundenLabel.textContent = einheit(rest.sekunden, 'Sekunde', 'Sekunden');
+      if (when) when.textContent = `am ${uhrzeitText(stand.ziel)}`;
+      const restMs = Math.max(0, stand.ziel - jetzt);
+      const fenster = Math.max(1, stand.ziel - stand.beginn);
+      ring('sekunden', (restMs % 60_000) / 60_000);
+      ring('minuten', (restMs % 3_600_000) / 3_600_000);
+      ring('stunden', (restMs % 86_400_000) / 86_400_000);
+      ring('tage', restMs / fenster);
+
+      const minute = `${rest.tage}:${rest.stunden}:${rest.minuten}`;
+      if (sr && minute !== letzteMinute) {
+        letzteMinute = minute;
+        sr.textContent = `Noch ${rest.tage} ${einheit(rest.tage, 'Tag', 'Tage')}, ${rest.stunden} ${einheit(rest.stunden, 'Stunde', 'Stunden')} und ${rest.minuten} ${einheit(rest.minuten, 'Minute', 'Minuten')} bis zur Anmeldung am ${uhrzeitText(stand.ziel)}.`;
+      }
+    };
+
+    zeichnen();
+    const reduziert = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduziert) {
+      window.setInterval(() => zeichnen(), 1000);
+    } else {
+      const lauf = () => {
+        zeichnen();
+        window.requestAnimationFrame(lauf);
+      };
+      window.requestAnimationFrame(lauf);
+    }
+  }
+</script>

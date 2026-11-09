@@ -16,6 +16,8 @@ const termine = defineCollection({
     title: z.string(),
     year: z.number(),
     portal: z.string().url(),
+    // Letzter Ferientag, YYYY-MM-DD. Danach darf der Countdown neu beginnen.
+    saisonEnde: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
     wochen: z.array(
       z.object({
         name: z.string(),

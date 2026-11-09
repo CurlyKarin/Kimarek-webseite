@@ -56,24 +56,36 @@ const path = Astro.url.pathname;
 <script>
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.querySelector('#site-nav');
+  const header = document.querySelector('.site-header');
   const drops = document.querySelectorAll('.nav-drop');
+
+  const closeDrops = (except?: Element) => {
+    drops.forEach((drop) => {
+      if (drop !== except && drop instanceof HTMLDetailsElement) drop.open = false;
+    });
+  };
+
+  const closeNav = () => {
+    nav?.classList.remove('is-open');
+    toggle?.setAttribute('aria-expanded', 'false');
+    closeDrops();
+  };
 
   toggle?.addEventListener('click', () => {
     const open = nav?.classList.toggle('is-open') ?? false;
     toggle.setAttribute('aria-expanded', String(open));
-    if (!open) {
-      drops.forEach((drop) => {
-        if (drop instanceof HTMLDetailsElement) drop.open = false;
-      });
-    }
+    if (!open) closeDrops();
   });
 
   drops.forEach((drop) => {
-    drop.addEventListener('toggle', () => {
-      if (!(drop instanceof HTMLDetailsElement) || !drop.open) return;
-      drops.forEach((other) => {
-        if (other !== drop && other instanceof HTMLDetailsElement) other.open = false;
-      });
+    drop.querySelector('summary')?.addEventListener('pointerdown', () => {
+      closeDrops(drop);
     });
+  });
+
+  document.addEventListener('click', (event) => {
+    const target = event.target;
+    if (!(target instanceof Node) || header?.contains(target)) return;
+    closeNav();
   });
 </script>

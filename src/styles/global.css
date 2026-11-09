@@ -189,24 +189,26 @@ main .wrap {
   margin: 0.35rem 0 0;
   padding: 0.4rem;
   position: absolute;
+  z-index: 1;
   min-width: 12rem;
-  background: var(--sheet);
-  border: 1px solid var(--line);
+  background: var(--blue);
+  border: 0;
   border-radius: 0;
-  box-shadow: var(--shadow);
+  box-shadow: none;
 }
 
 .nav-drop a {
   display: block;
   padding: 0.4rem 0.7rem;
   border-radius: 0;
-  color: var(--ink);
+  color: white;
   text-decoration: none;
 }
 
 .nav-drop a:hover,
 .nav-drop a[aria-current='page'] {
-  background: var(--yellow);
+  background: rgba(255, 255, 255, 0.16);
+  color: white;
 }
 
 .anmeldung-link {

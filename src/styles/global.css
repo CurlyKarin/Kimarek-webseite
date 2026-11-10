@@ -79,6 +79,17 @@ body.page-open .tent-copy {
   margin-inline: auto;
 }
 
+body.page-open .team-copy {
+  max-width: 46rem;
+  margin-inline: auto;
+}
+
+body.page-open .team-copy {
+  margin-top: 1.15rem;
+  background: rgba(255, 253, 250, 0.9);
+  padding: 0.85rem 1.15rem 0.35rem;
+}
+
 body.page-open .tent-copy {
   margin-top: 1.15rem;
   text-align: center;
@@ -86,6 +97,30 @@ body.page-open .tent-copy {
 
 body.page-open .collage {
   margin-top: 1.4rem;
+}
+
+.week {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 1.1rem 1.3rem;
+  align-items: start;
+  margin-top: 8vh;
+}
+
+.week-copy {
+  background: rgba(255, 253, 250, 0.9);
+  padding: 1rem 1.15rem 0.35rem;
+}
+
+.week-copy .prose {
+  max-width: none;
+  padding-bottom: 0.15rem;
+}
+
+.week-photo {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 main {
@@ -764,6 +799,10 @@ h1 {
   background: var(--blue-deep);
 }
 
+.group-fade {
+  aspect-ratio: 3 / 2;
+}
+
 .team-fade img {
   position: absolute;
   inset: 0;
@@ -1031,7 +1070,8 @@ h1 {
   .trio,
   .home-extra,
   .boards,
-  .story {
+  .story,
+  .week {
     grid-template-columns: 1fr;
   }
 

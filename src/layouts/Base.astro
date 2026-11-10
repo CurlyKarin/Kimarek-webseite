@@ -13,9 +13,10 @@ import '../styles/global.css';
 interface Props {
   title: string;
   description: string;
+  hintergrund?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, hintergrund } = Astro.props;
 const termine = await getCollection('termine');
 const aktuell = termine.sort((a, b) => b.data.year - a.data.year)[0];
 const portal = aktuell?.data.portal;
@@ -33,7 +34,10 @@ const documentTitle = title === verein.name ? title : `${title} · ${verein.name
     <link rel="icon" href={pfad('/favicon.ico')} />
     <title>{documentTitle}</title>
   </head>
-  <body style={`--zelt: url('${pfad('/media/zelt.jpg')}')`}>
+  <body
+    class={hintergrund ? 'page-open' : undefined}
+    style={`--zelt: url('${hintergrund ?? pfad('/media/zelt.jpg')}')`}
+  >
     <a class="skip" href="#inhalt">Zum Inhalt</a>
     <Header portal={portal} />
     <main id="inhalt">

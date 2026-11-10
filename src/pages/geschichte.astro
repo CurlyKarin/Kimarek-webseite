@@ -3,6 +3,8 @@ import { getCollection, getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { bild } from '../lib/bilder';
 
+const chapiteau = bild('hintergruende/chappi.JPG');
+
 const seite = await getEntry('seiten', 'geschichte');
 if (!seite) {
   throw new Error('Geschichtsseite fehlt');
@@ -10,7 +12,7 @@ if (!seite) {
 const abschnitte = (await getCollection('geschichte')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<Base title={seite.data.title} description={seite.data.description}>
+<Base title={seite.data.title} description={seite.data.description} hintergrund={chapiteau}>
   <article class="wrap">
     <header class="page-head">
       {seite.data.kicker && <p class="kicker">{seite.data.kicker}</p>}

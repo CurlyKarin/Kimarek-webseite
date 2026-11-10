@@ -47,6 +47,47 @@ body::before {
     var(--zelt) center / cover no-repeat;
 }
 
+body.page-open::before {
+  background:
+    linear-gradient(180deg, rgba(3, 24, 48, 0.16), rgba(3, 24, 48, 0.05) 22%, rgba(3, 24, 48, 0.22)),
+    var(--zelt) center / cover no-repeat;
+}
+
+body.page-open main .wrap {
+  background: transparent;
+}
+
+body.page-open .page-head,
+body.page-open .story-text,
+body.page-open .tent-copy {
+  background: rgba(255, 253, 250, 0.9);
+}
+
+body.page-open .page-head {
+  margin-top: 11vh;
+  padding: 1.15rem 1.2rem 0.7rem;
+}
+
+body.page-open .story-text,
+body.page-open .tent-copy {
+  padding: 0.85rem 1.15rem 0.35rem;
+}
+
+body.page-open .tent-head,
+body.page-open .tent-copy {
+  max-width: 40rem;
+  margin-inline: auto;
+}
+
+body.page-open .tent-copy {
+  margin-top: 1.15rem;
+  text-align: center;
+}
+
+body.page-open .collage {
+  margin-top: 1.4rem;
+}
+
 main {
   flex: 1;
 }

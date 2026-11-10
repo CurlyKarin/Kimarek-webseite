@@ -4,8 +4,4 @@ description: Das vier-mastige Chapiteau des Kinderzirkus Kimarek.
 kicker: Geschichte
 ---
 
-Das Chapiteau ist ein viermastiges Zirkuszelt. Ingo Dubinski hat es 1992 im Rahmen der Fernsehsendung „Jetzt oder nie“ organisiert, nachdem ein Sturm das selbstgenähte alte Zelt zerstört hatte.
-
-Die Manege misst neun Meter im Durchmesser. Etwa 350 Zuschauer finden Platz. Für den Aufbau braucht es eine freie Fläche von 43 auf 43 Metern. Der Boden muss frei von Versorgungsleitungen sein: Die Erdnägel der Abspannungen sind 1,30 Meter lang.
-
-Auf- und Abbau dauern drei Tage und brauchen etwa zehn Helfende. Als fliegender Bau wird das Zelt alle drei Jahre geprüft.
+Unser Chapiteau ist ein 4-mastiges Zirkuszelt, das von Ingo Dubinski im Rahmen der Fernsehsendung „Jetzt oder nie“ im Jahr 1992 für uns organisiert wurde, nachdem das selbstgenähte alte Zirkuszelt von einem Sturm zerstört worden war. Die Manege misst im Durchmesser neun Meter. In unserem Zelt finden etwa 350 Zuschauer Platz. Um es aufbauen zu können, wird eine Fläche von 43x43 Metern benötigt. Der Untergrund muss frei von Versorgungsleitungen sein, denn ein Erdnagel, mit dem die Abspannungen befestigt sind, hat eine Länge von 1,30 m und könnte sonst Schäden verursachen. Für den Auf- bzw. Abbau sind drei Tage und ca. 10 Helfer notwendig. Da es sich beim Chapiteau um einen sogenannten „fliegenden Bau“ handelt, findet alle 3 Jahre eine Überprüfung statt.

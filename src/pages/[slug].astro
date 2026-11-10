@@ -10,7 +10,8 @@ export async function getStaticPaths() {
         seite.id !== 'start' &&
         seite.id !== 'vorstand' &&
         seite.id !== 'betreuer' &&
-        seite.id !== 'geschichte',
+        seite.id !== 'geschichte' &&
+        seite.id !== 'zelt',
     )
     .map((seite) => ({
       params: { slug: seite.id },

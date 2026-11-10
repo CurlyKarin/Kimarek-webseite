@@ -4,18 +4,18 @@ import Base from '../layouts/Base.astro';
 import gruppen from '../data/gruppenfotos.json';
 import jugend from '../data/jugend.json';
 import { bild } from '../lib/bilder';
-import { pfad } from '../lib/pfad';
 
 const seite = await getEntry('seiten', 'jugendwoche');
 if (!seite) {
   throw new Error('Jugendwochentext fehlt');
 }
 const { Content } = await render(seite);
+const hintergrund = bild('hintergruende/two.JPG');
 const wechsel = gruppen.jugendwoche.map((name) => bild(`gruppenfotos/jugendwoche/${name}`));
 const collage = jugend.collage.map((name) => bild(`jugend/${name}`));
 ---
 
-<Base title={seite.data.title} description={seite.data.description} hintergrund={pfad('/media/zelt.jpg')}>
+<Base title={seite.data.title} description={seite.data.description} hintergrund={hintergrund}>
   <article class="wrap feature">
     <header class="page-head">
       {seite.data.kicker && <p class="kicker">{seite.data.kicker}</p>}

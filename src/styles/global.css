@@ -859,6 +859,10 @@ h1 {
   padding-bottom: 0;
 }
 
+.story-text h2:first-child {
+  margin-top: 0;
+}
+
 .story-photo {
   display: block;
   width: 100%;

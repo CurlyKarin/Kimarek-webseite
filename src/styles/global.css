@@ -59,7 +59,7 @@ body.page-open main .wrap {
 
 body.page-open .page-head,
 body.page-open .story-text,
-body.page-open .tent-copy {
+body.page-open .team-copy {
   background: rgba(255, 253, 250, 0.9);
 }
 
@@ -69,34 +69,21 @@ body.page-open .page-head {
 }
 
 body.page-open .story-text,
-body.page-open .tent-copy {
+body.page-open .team-copy {
   padding: 0.85rem 1.15rem 0.35rem;
 }
 
-body.page-open .tent-head,
-body.page-open .tent-copy {
-  max-width: 40rem;
-  margin-inline: auto;
+.feature > .team-fade,
+.feature > .feature-photo,
+.feature > .team-copy,
+.feature > .collage {
+  margin-top: 1.75rem;
 }
 
-body.page-open .team-copy {
-  max-width: 46rem;
-  margin-inline: auto;
-}
-
-body.page-open .team-copy {
-  margin-top: 1.15rem;
-  background: rgba(255, 253, 250, 0.9);
-  padding: 0.85rem 1.15rem 0.35rem;
-}
-
-body.page-open .tent-copy {
-  margin-top: 1.15rem;
-  text-align: center;
-}
-
-body.page-open .collage {
-  margin-top: 1.4rem;
+.feature-photo {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .week {

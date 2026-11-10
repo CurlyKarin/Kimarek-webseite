@@ -4,6 +4,7 @@ import Base from '../layouts/Base.astro';
 import gruppen from '../data/gruppenfotos.json';
 import jugend from '../data/jugend.json';
 import { bild } from '../lib/bilder';
+import { pfad } from '../lib/pfad';
 
 const seite = await getEntry('seiten', 'jugendwoche');
 if (!seite) {
@@ -14,8 +15,8 @@ const wechsel = gruppen.jugendwoche.map((name) => bild(`gruppenfotos/jugendwoche
 const collage = jugend.collage.map((name) => bild(`jugend/${name}`));
 ---
 
-<Base title={seite.data.title} description={seite.data.description}>
-  <article class="wrap">
+<Base title={seite.data.title} description={seite.data.description} hintergrund={pfad('/media/zelt.jpg')}>
+  <article class="wrap feature">
     <header class="page-head">
       {seite.data.kicker && <p class="kicker">{seite.data.kicker}</p>}
       <h1>{seite.data.title}</h1>

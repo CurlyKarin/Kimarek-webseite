@@ -3,6 +3,7 @@ import { getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import betreuer from '../data/betreuer.json';
 import { bild } from '../lib/bilder';
+import { pfad } from '../lib/pfad';
 
 const seite = await getEntry('seiten', 'betreuer');
 if (!seite) {
@@ -13,8 +14,8 @@ const wechsel = betreuer.wechsel.map((name) => bild(`betreuer/wechsel/${name}`))
 const collage = betreuer.collage.map((name) => bild(`betreuer/${name}`));
 ---
 
-<Base title={seite.data.title} description={seite.data.description}>
-  <article class="wrap">
+<Base title={seite.data.title} description={seite.data.description} hintergrund={pfad('/media/zelt.jpg')}>
+  <article class="wrap feature">
     <header class="page-head">
       {seite.data.kicker && <p class="kicker">{seite.data.kicker}</p>}
       <h1>{seite.data.title}</h1>

@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
+import { bild } from '../lib/bilder';
 
 const seite = await getEntry('seiten', 'vorstand');
 if (!seite) {
@@ -24,15 +25,13 @@ const aufstellungen = (await getCollection('aufstellungen')).sort((a, b) => a.da
         aufstellungen.map((eintrag) => (
           <li>
             <figure class="board-shot">
-              <div class="photo-frame">
-                {eintrag.data.bild ? (
-                  <img src={eintrag.data.bild} alt="" />
+              {
+                eintrag.data.bild ? (
+                  <img class="board-photo" src={bild(eintrag.data.bild)} alt="" />
                 ) : (
-                  <div class="mat">
-                    <p>Foto folgt</p>
-                  </div>
-                )}
-              </div>
+                  <p class="board-missing">Foto folgt</p>
+                )
+              }
               <figcaption class="board-caption">
                 <h2>{eintrag.data.titel}</h2>
                 <p>{eintrag.data.zeile}</p>

@@ -44,6 +44,17 @@ const jahre = defineCollection({
   }),
 });
 
+// Abschnitte sind unabhängig: Text, Foto und was zuerst kommt. Das CMS soll später genau diese Liste pflegen.
+const geschichte = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/geschichte' }),
+  schema: z.object({
+    order: z.number(),
+    bild: z.string(),
+    alt: z.string(),
+    zuerst: z.enum(['text', 'bild']),
+  }),
+});
+
 const aufstellungen = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/aufstellungen' }),
   schema: z.object({
@@ -63,4 +74,4 @@ const videos = defineCollection({
   }),
 });
 
-export const collections = { seiten, termine, jahre, aufstellungen, videos };
+export const collections = { seiten, termine, jahre, geschichte, aufstellungen, videos };

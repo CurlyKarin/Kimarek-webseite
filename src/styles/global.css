@@ -779,6 +779,29 @@ h1 {
   object-fit: cover;
 }
 
+.story {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem 1.4rem;
+  align-items: start;
+  margin-top: 1.5rem;
+}
+
+.story-text {
+  max-width: none;
+  padding-bottom: 0;
+}
+
+.story-photo {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.story-bild .story-photo {
+  order: -1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .team-fade img {
     transition: none;
@@ -966,7 +989,8 @@ h1 {
   .hero,
   .trio,
   .home-extra,
-  .boards {
+  .boards,
+  .story {
     grid-template-columns: 1fr;
   }
 

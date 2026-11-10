@@ -5,7 +5,13 @@ import Base from '../layouts/Base.astro';
 export async function getStaticPaths() {
   const seiten = await getCollection('seiten');
   return seiten
-    .filter((seite) => seite.id !== 'start' && seite.id !== 'vorstand' && seite.id !== 'betreuer')
+    .filter(
+      (seite) =>
+        seite.id !== 'start' &&
+        seite.id !== 'vorstand' &&
+        seite.id !== 'betreuer' &&
+        seite.id !== 'geschichte',
+    )
     .map((seite) => ({
       params: { slug: seite.id },
       props: { seite },

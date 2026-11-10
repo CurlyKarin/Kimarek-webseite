@@ -1,0 +1,35 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { bild } from '../lib/bilder';
+
+const seite = await getEntry('seiten', 'geschichte');
+if (!seite) {
+  throw new Error('Geschichtsseite fehlt');
+}
+const abschnitte = (await getCollection('geschichte')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title={seite.data.title} description={seite.data.description}>
+  <article class="wrap">
+    <header class="page-head">
+      {seite.data.kicker && <p class="kicker">{seite.data.kicker}</p>}
+      <h1>{seite.data.title}</h1>
+    </header>
+    {
+      await Promise.all(
+        abschnitte.map(async (abschnitt) => {
+          const { Content } = await render(abschnitt);
+          return (
+            <section class:list={['story', abschnitt.data.zuerst === 'bild' && 'story-bild']}>
+              <div class="prose story-text">
+                <Content />
+              </div>
+              <img class="story-photo" src={bild(abschnitt.data.bild)} alt={abschnitt.data.alt} />
+            </section>
+          );
+        }),
+      )
+    }
+  </article>
+</Base>

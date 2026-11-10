@@ -446,17 +446,13 @@ h1 {
   margin-top: 1.4rem;
 }
 
-.button,
-.button-quiet {
+.button {
   display: inline-flex;
   align-items: center;
   text-decoration: none;
   font-family: var(--font-display);
   border-radius: 0;
   padding: 0.7rem 1.1rem;
-}
-
-.button {
   background: var(--red);
   color: white;
 }
@@ -466,15 +462,20 @@ h1 {
   color: white;
 }
 
-.button-quiet {
-  background: transparent;
-  color: var(--ink);
-  border: 2px solid var(--ink);
+.remind {
+  max-width: 36rem;
+  margin: 1rem 0 0;
+  padding: 0.75rem 0.95rem 0.85rem;
+  background: rgba(255, 208, 0, 0.34);
+  border-left: 6px solid var(--red);
 }
 
-.button-quiet:hover {
-  background: var(--yellow);
-  color: var(--ink);
+.remind a {
+  display: block;
+  width: fit-content;
+  margin-top: 0.35rem;
+  font-family: var(--font-display);
+  font-weight: 500;
 }
 
 .ticket {

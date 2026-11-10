@@ -33,8 +33,11 @@ const TerminInhalt = terminText?.Content;
             </a>
           )
         }
-        <a class="button-quiet" href={pfad('/kinderwoche')}>So läuft die Woche</a>
       </div>
+      <p class="remind">
+        Nicht verpassen. Jedes Jahr am 1. Februar um 9 Uhr öffnet die Anmeldung.
+        <a href={pfad('/anmeldung.ics')}>Erinnerung in den Kalender legen</a>
+      </p>
     </div>
     {
       aktuell && (

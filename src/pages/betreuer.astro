@@ -52,18 +52,6 @@ const collage = betreuer.collage.map((name) => bild(`betreuer/${name}`));
 </Base>
 
 <script>
-  const fade = document.querySelector('.team-fade');
-  const frames = [...(fade?.querySelectorAll('img') ?? [])];
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduced && frames.length > 1) {
-    let index = 0;
-    window.setInterval(() => {
-      frames[index]?.classList.remove('is-shown');
-      index = (index + 1) % frames.length;
-      frames[index]?.classList.add('is-shown');
-    }, 3000);
-  }
-
   const collage = document.querySelector('.collage');
   const gap = 4;
 

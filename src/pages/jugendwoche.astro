@@ -53,18 +53,6 @@ const collage = jugend.collage.map((name) => bild(`jugend/${name}`));
 </Base>
 
 <script>
-  const fade = document.querySelector('.team-fade');
-  const frames = [...(fade?.querySelectorAll('img') ?? [])];
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduced && frames.length > 1) {
-    let frame = 0;
-    window.setInterval(() => {
-      frames[frame]?.classList.remove('is-shown');
-      frame = (frame + 1) % frames.length;
-      frames[frame]?.classList.add('is-shown');
-    }, 3000);
-  }
-
   const collage = document.querySelector('.collage');
   const gap = 4;
 

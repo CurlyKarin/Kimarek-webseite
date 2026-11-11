@@ -55,6 +55,8 @@ body.page-open::before {
 
 body.page-open main .wrap {
   background: transparent;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 body.page-open .page-head,
@@ -147,8 +149,11 @@ a:hover {
 }
 
 .wrap {
-  width: min(var(--wrap), calc(100% - 2rem));
-  margin-inline: auto;
+  width: calc(100% - 2rem);
+  max-width: 72rem;
+  max-width: var(--wrap);
+  margin-left: auto;
+  margin-right: auto;
 }
 
 main .wrap {
@@ -791,18 +796,36 @@ h1 {
   aspect-ratio: 3 / 2;
 }
 
+@supports not (aspect-ratio: 1 / 1) {
+  .team-fade {
+    height: 0;
+    padding-top: 40.22%;
+  }
+
+  .group-fade {
+    padding-top: 66.67%;
+  }
+}
+
 .team-fade img {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   opacity: 0;
+  visibility: hidden;
   transition: opacity 0.8s ease;
 }
 
 .team-fade img.is-shown {
+  z-index: 1;
   opacity: 1;
+  visibility: visible;
 }
 
 .team-copy {

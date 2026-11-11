@@ -43,6 +43,23 @@ const documentTitle = title === verein.name ? title : `${title} · ${verein.name
     <main id="inhalt">
       <slot />
     </main>
+    <script is:inline>
+      (function () {
+        var roots = document.querySelectorAll('.team-fade');
+        for (var r = 0; r < roots.length; r++) {
+          var frames = roots[r].getElementsByTagName('img');
+          if (frames.length < 2) continue;
+          (function (list) {
+            var index = 0;
+            window.setInterval(function () {
+              list[index].classList.remove('is-shown');
+              index = (index + 1) % list.length;
+              list[index].classList.add('is-shown');
+            }, 3000);
+          })(frames);
+        }
+      })();
+    </script>
     <Footer portal={portal} />
   </body>
 </html>

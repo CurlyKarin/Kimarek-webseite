@@ -1,45 +1,22 @@
 ---
-import { getCollection, getEntry, render } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
+import Abschnitte from '../components/Abschnitte.astro';
 import Base from '../layouts/Base.astro';
-import { bild } from '../lib/bilder';
+import { pfad } from '../lib/pfad';
 
 const seite = await getEntry('seiten', 'vorstand');
 if (!seite) {
   throw new Error('Vorstandstext fehlt');
 }
-const { Content } = await render(seite);
-const aufstellungen = (await getCollection('aufstellungen')).sort((a, b) => a.data.order - b.data.order);
+const abschnitte = (await getCollection('vorstand')).sort((a, b) => a.data.order - b.data.order);
 ---
 
-<Base title={seite.data.title} description={seite.data.description}>
+<Base title={seite.data.title} description={seite.data.description} hintergrund={pfad('/media/zelt.jpg')}>
   <article class="wrap">
     <header class="page-head">
       {seite.data.kicker && <p class="kicker">{seite.data.kicker}</p>}
       <h1>{seite.data.title}</h1>
     </header>
-    <div class="prose">
-      <Content />
-    </div>
-    <ul class="boards">
-      {
-        aufstellungen.map((eintrag) => (
-          <li>
-            <figure class="board-shot">
-              {
-                eintrag.data.bild ? (
-                  <img class="board-photo" src={bild(eintrag.data.bild)} alt="" />
-                ) : (
-                  <p class="board-missing">Foto folgt</p>
-                )
-              }
-              <figcaption class="board-caption">
-                <h2>{eintrag.data.titel}</h2>
-                <p>{eintrag.data.zeile}</p>
-              </figcaption>
-            </figure>
-          </li>
-        ))
-      }
-    </ul>
+    <Abschnitte abschnitte={abschnitte} />
   </article>
 </Base>

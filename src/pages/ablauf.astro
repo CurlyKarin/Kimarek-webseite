@@ -1,5 +1,6 @@
 ---
-import { getCollection, getEntry, render } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
+import Abschnitte from '../components/Abschnitte.astro';
 import Base from '../layouts/Base.astro';
 import { bild } from '../lib/bilder';
 
@@ -18,20 +19,6 @@ const abschnitte = (await getCollection('ablauf')).sort((a, b) => a.data.order -
       {seite.data.kicker && <p class="kicker">{seite.data.kicker}</p>}
       <h1>{seite.data.title}</h1>
     </header>
-    {
-      await Promise.all(
-        abschnitte.map(async (abschnitt) => {
-          const { Content } = await render(abschnitt);
-          return (
-            <section class:list={['story', abschnitt.data.zuerst === 'bild' && 'story-bild']}>
-              <div class="prose story-text">
-                <Content />
-              </div>
-              <img class="story-photo" src={bild(abschnitt.data.bild)} alt={abschnitt.data.alt} />
-            </section>
-          );
-        }),
-      )
-    }
+    <Abschnitte abschnitte={abschnitte} />
   </article>
 </Base>

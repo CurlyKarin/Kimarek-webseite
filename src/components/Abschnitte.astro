@@ -1,0 +1,29 @@
+---
+import { render } from 'astro:content';
+import { bild } from '../lib/bilder';
+
+const { abschnitte } = Astro.props;
+---
+
+{
+  await Promise.all(
+    abschnitte.map(async (abschnitt) => {
+      const { Content } = await render(abschnitt);
+      const foto = abschnitt.data.bild;
+      return (
+        <section
+          class:list={[
+            'story',
+            !foto && 'story-only',
+            foto && abschnitt.data.zuerst === 'bild' && 'story-bild',
+          ]}
+        >
+          <div class="prose story-text">
+            <Content />
+          </div>
+          {foto && <img class="story-photo" src={bild(foto)} alt={abschnitt.data.alt ?? ''} />}
+        </section>
+      );
+    }),
+  )
+}

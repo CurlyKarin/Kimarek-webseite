@@ -30,7 +30,7 @@ export const navigation: NavItem[] = [
   {
     label: 'Geschichte',
     children: [
-      { href: '/geschichte', label: 'Geschichte' },
+      { href: '/geschichte', label: 'Seit 1987' },
       { href: '/zelt', label: 'Das Zelt' },
     ],
   },

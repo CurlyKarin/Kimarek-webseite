@@ -1,5 +1,5 @@
 ---
-title: Geschichte
+title: Seit 1987
 description: Wie aus einem Bauwagen der Kinderzirkus Kimarek wurde.
-kicker: Seit 1987
+kicker: Geschichte
 ---

@@ -44,13 +44,19 @@ const jahre = defineCollection({
   }),
 });
 
-// Abschnitte sind unabhängig: Text, Foto und was zuerst kommt. Das CMS soll später genau diese Liste pflegen.
-const abschnitt = z.object({
-  order: z.number(),
-  bild: z.string(),
-  alt: z.string(),
-  zuerst: z.enum(['text', 'bild']),
-});
+// Ein Abschnitt ist ein Block: nur Text, Text dann Foto, oder Foto dann Text.
+// Mit Foto ist der Textkasten so hoch wie das Bild. Das CMS pflegt später genau diese Liste.
+const abschnitt = z
+  .object({
+    order: z.number(),
+    bild: z.string().optional(),
+    alt: z.string().optional(),
+    zuerst: z.enum(['text', 'bild']).default('text'),
+  })
+  .refine((eintrag) => !eintrag.bild || Boolean(eintrag.alt?.trim()), {
+    message: 'Zum Foto gehört ein Alt-Text.',
+    path: ['alt'],
+  });
 
 const geschichte = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/geschichte' }),
@@ -62,14 +68,9 @@ const ablauf = defineCollection({
   schema: abschnitt,
 });
 
-const aufstellungen = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/aufstellungen' }),
-  schema: z.object({
-    titel: z.string(),
-    order: z.number(),
-    zeile: z.string(),
-    bild: z.string().optional(),
-  }),
+const vorstand = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/vorstand' }),
+  schema: abschnitt,
 });
 
 const videos = defineCollection({
@@ -81,4 +82,4 @@ const videos = defineCollection({
   }),
 });
 
-export const collections = { seiten, termine, jahre, geschichte, ablauf, aufstellungen, videos };
+export const collections = { seiten, termine, jahre, geschichte, ablauf, vorstand, videos };

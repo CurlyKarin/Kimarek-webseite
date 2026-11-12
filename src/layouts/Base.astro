@@ -83,6 +83,42 @@ const documentTitle = title === verein.name ? title : `${title} · ${verein.name
         });
       })();
     </script>
+    <script is:inline>
+      (function () {
+        var dialogs = document.getElementsByClassName('lightbox');
+        if (!dialogs.length || !window.MutationObserver) return;
+        var locked = false;
+        var y = 0;
+        function lock() {
+          if (locked) return;
+          y = window.pageYOffset || document.documentElement.scrollTop || 0;
+          document.body.style.position = 'fixed';
+          document.body.style.top = '-' + y + 'px';
+          document.body.style.left = '0';
+          document.body.style.right = '0';
+          document.body.style.width = '100%';
+          locked = true;
+        }
+        function unlock() {
+          if (!locked) return;
+          document.body.style.position = '';
+          document.body.style.top = '';
+          document.body.style.left = '';
+          document.body.style.right = '';
+          document.body.style.width = '';
+          locked = false;
+          window.scrollTo(0, y);
+        }
+        for (var i = 0; i < dialogs.length; i++) {
+          new MutationObserver(function (records) {
+            for (var r = 0; r < records.length; r++) {
+              if (records[r].target.hasAttribute('open')) lock();
+              else unlock();
+            }
+          }).observe(dialogs[i], { attributes: true, attributeFilter: ['open'] });
+        }
+      })();
+    </script>
     <Footer portal={portal} />
   </body>
 </html>

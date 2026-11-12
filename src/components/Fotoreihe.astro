@@ -1,0 +1,25 @@
+---
+interface Foto {
+  src: string;
+  alt: string;
+}
+
+interface Props {
+  fotos: Foto[];
+  label: string;
+}
+
+const { fotos, label } = Astro.props;
+---
+
+{
+  fotos.length > 0 && (
+    <div class="team-fade" aria-label={label}>
+      <button type="button" class="frame-open">
+        {fotos.map((foto, index) => (
+          <img src={foto.src} alt={foto.alt} class={index === 0 ? 'is-shown' : undefined} />
+        ))}
+      </button>
+    </div>
+  )
+}

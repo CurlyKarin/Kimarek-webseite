@@ -1,5 +1,6 @@
 ---
 import { getEntry, render } from 'astro:content';
+import Fotoreihe from '../components/Fotoreihe.astro';
 import Base from '../layouts/Base.astro';
 import gruppen from '../data/gruppenfotos.json';
 import kinder from '../data/kinder.json';
@@ -21,13 +22,7 @@ const collage = kinder.collage.map((name) => bild(`kinder/${name}`));
       {seite.data.kicker && <p class="kicker">{seite.data.kicker}</p>}
       <h1>{seite.data.title}</h1>
     </header>
-    <div class="team-fade group-fade" aria-label="Gruppenfotos der Kinderwochen">
-      {
-        wechsel.map((src, index) => (
-          <img src={src} alt="" class={index === 0 ? 'is-shown' : undefined} />
-        ))
-      }
-    </div>
+    <Fotoreihe label="Gruppenfotos der Kinderwochen" fotos={wechsel.map((src) => ({ src, alt: '' }))} />
     <div class="prose team-copy">
       <Content />
     </div>
@@ -130,6 +125,15 @@ const collage = kinder.collage.map((name) => bild(`kinder/${name}`));
       photos = [...(collage.querySelectorAll('.collage-open img') ?? [])];
       const current = button.querySelector('img');
       show(photos.indexOf(current as HTMLImageElement));
+      if (dialog instanceof HTMLDialogElement) dialog.showModal();
+    });
+  });
+
+  document.querySelectorAll('.frame-open').forEach((button) => {
+    button.addEventListener('click', () => {
+      photos = [...button.querySelectorAll('img')];
+      const current = button.querySelector('img.is-shown') || photos[0];
+      show(Math.max(0, photos.indexOf(current)));
       if (dialog instanceof HTMLDialogElement) dialog.showModal();
     });
   });

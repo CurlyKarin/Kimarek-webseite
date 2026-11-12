@@ -1,5 +1,6 @@
 ---
 import { getEntry, render } from 'astro:content';
+import Fotoreihe from '../components/Fotoreihe.astro';
 import Video from '../components/Video.astro';
 import Base from '../layouts/Base.astro';
 import zelt from '../data/zelt.json';
@@ -24,7 +25,10 @@ const collage = zelt.collage.map((name) => bild(`zelt/web/${name}`));
       {seite.data.kicker && <p class="kicker">{seite.data.kicker}</p>}
       <h1>{seite.data.title}</h1>
     </header>
-    <img class="feature-photo" src={chapiteau} alt="Rot-gelbes Chapiteau mit Zaun und Bank davor" />
+    <Fotoreihe
+      label="Foto des Zeltes"
+      fotos={[{ src: chapiteau, alt: 'Rot-gelbes Chapiteau mit Zaun und Bank davor' }]}
+    />
     <div class="prose team-copy">
       <Content />
     </div>
@@ -123,6 +127,15 @@ const collage = zelt.collage.map((name) => bild(`zelt/web/${name}`));
       photos = [...(collage.querySelectorAll('.collage-open img') ?? [])];
       const current = button.querySelector('img');
       show(photos.indexOf(current as HTMLImageElement));
+      if (dialog instanceof HTMLDialogElement) dialog.showModal();
+    });
+  });
+
+  document.querySelectorAll('.frame-open').forEach((button) => {
+    button.addEventListener('click', () => {
+      photos = [...button.querySelectorAll('img')];
+      const current = button.querySelector('img.is-shown') || photos[0];
+      show(Math.max(0, photos.indexOf(current)));
       if (dialog instanceof HTMLDialogElement) dialog.showModal();
     });
   });

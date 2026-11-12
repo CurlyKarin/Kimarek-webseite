@@ -743,6 +743,16 @@ h1 {
   background: var(--blue-deep);
 }
 
+.team-fade .frame-open {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
 .team-fade img {
   display: none;
   width: 100%;

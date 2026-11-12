@@ -985,20 +985,24 @@ body.page-open .story:not(.story-only) .story-text {
 .footer-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem 1.5rem;
   justify-content: space-between;
   align-items: center;
+}
+
+.footer-row .fine {
+  margin: 0 1.5rem 0.6rem 0;
 }
 
 .footer-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem 1rem;
+  margin: 0 -0.5rem -0.4rem;
 }
 
 .footer-links a {
   text-decoration: none;
   font-family: var(--font-display);
+  margin: 0 0.5rem 0.4rem;
 }
 
 .fine {

@@ -13,6 +13,19 @@ npm run dev
 
 Die Vorschau läuft danach auf [http://localhost:4321](http://localhost:4321).
 
+## Bausteine
+
+Inhaltsseiten bestehen aus wenigen festen Bausteinen. Der Vorstand soll später Beiträge dieser Art anlegen, entfernen und umsortieren können. Überschrift, Menü, Fußzeile, Countdown, Impressum, Datenschutz und die Galerie-Jahre bleiben fest.
+
+| Baustein | Was er zeigt | Wo er heute liegt |
+| --- | --- | --- |
+| **Abschnitt** | Nur Text, Text und Foto, oder Foto und Text. Text und Foto sitzen in einem Kasten, der Abstand dazwischen hat dieselbe Fläche. | `src/components/Abschnitte.astro`, Beiträge in `src/content/geschichte`, `ablauf` und `vorstand` |
+| **Fotoreihe** | Ein Foto bleibt stehen. Mehrere wechseln alle drei Sekunden. Ein Klick öffnet dieselbe Ansicht wie in der Galerie, nur mit den Fotos dieser Reihe. | `src/components/Fotoreihe.astro`. Die Listen stehen noch in `src/data/gruppenfotos.json` und `betreuer.json`; das Zelt hat vorerst ein einzelnes Foto. |
+| **Collage** | Viele kleine Fotos unter dem Text. Ein Klick öffnet dieselbe Ansicht, nur für diese Fotos. Als eigener Baustein im Code noch nicht herausgelöst. | Direkt auf den Seiten Betreuer, Zelt, Kinderwoche und Jugendwoche. Die Dateinamen stehen in `src/data/betreuer.json`, `zelt.json`, `kinder.json` und `jugend.json`. |
+| **Video** | Titel und Standbild. Der Film startet erst beim Abspielen, über `youtube-nocookie.com`. Das Standbild kommt von YouTube. | `src/components/Video.astro`, Beiträge in `src/content/videos` |
+
+Zum Foto gehört ein Alt-Text. Bei einem Abschnitt legt `zuerst` fest, ob der Text oder das Foto zuerst kommt.
+
 ## Inhalte ändern
 
 Alles, was der Vorstand später pflegen soll, liegt als Markdown unter `src/content/`:
@@ -20,8 +33,8 @@ Alles, was der Vorstand später pflegen soll, liegt als Markdown unter `src/cont
 | Ordner | Inhalt |
 | --- | --- |
 | `termine` | Jahreszahlen, Wochen, Link zum Anmeldeportal und `saisonEnde`, der letzte Ferientag. Die Anmeldung startet immer am 1. Februar um 9 Uhr; der Countdown läuft bis dahin und beginnt erst nach `saisonEnde` neu. Solange die Anmeldung offen ist, steht das anstelle der Zahlen. |
-| `seiten` | Texte der Unterseiten |
-| `aufstellungen` | Vorstandsfotos und die Zeile „von links nach rechts“ |
+| `seiten` | Titel, Kurzbeschreibung und die kleine Zeile über der Überschrift |
+| `geschichte`, `ablauf`, `vorstand` | Abschnitte dieser Seiten |
 | `jahre` | Galerie-Jahre und die Anzahl der vorhandenen Fotos |
 | `videos` | YouTube-Filme |
 

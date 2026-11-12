@@ -39,9 +39,9 @@ Diese Website ist ein statisches Angebot. Es gibt kein Kontaktformular und kein 
 
 ### YouTube
 
-Auf der Seite [Videos](/videos) können Filme von YouTube abgespielt werden. Anbieter ist die YouTube, LLC, 901 Cherry Ave., San Bruno, CA 94066, USA.
+Auf dieser Website können Filme von YouTube abgespielt werden, zum Beispiel auf den Seiten [Videos](/videos) und [Das Zelt](/zelt). Anbieter ist die YouTube, LLC, 901 Cherry Ave., San Bruno, CA 94066, USA.
 
-Erst wenn Sie ein Video starten, wird eine Verbindung zu den Servern von YouTube hergestellt. Dabei kann YouTube erfahren, welche Seite Sie aufgerufen haben. Sind Sie in einem YouTube-Konto angemeldet, kann YouTube den Aufruf diesem Konto zuordnen. Das lässt sich vermeiden, indem Sie sich vorher abmelden. Die Einbindung nutzt den datenschutzfreundlicheren Modus von YouTube (`youtube-nocookie.com`).
+Für die Vorschau wird ein Standbild von den YouTube-Servern geladen (`i.ytimg.com`). Das eingebettete Video selbst wird erst gestartet, wenn Sie auf Abspielen klicken. Dann kann YouTube erfahren, welche Seite Sie aufgerufen haben. Sind Sie in einem YouTube-Konto angemeldet, kann YouTube den Aufruf diesem Konto zuordnen. Das lässt sich vermeiden, indem Sie sich vorher abmelden. Die Einbindung nutzt den datenschutzfreundlicheren Modus von YouTube (`youtube-nocookie.com`).
 
 Die Nutzung erfolgt im Interesse einer ansprechenden Darstellung unserer Angebote. Das ist ein berechtigtes Interesse im Sinne von Art. 6 Abs. 1 lit. f DSGVO.
 

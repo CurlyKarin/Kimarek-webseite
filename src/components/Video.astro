@@ -1,0 +1,21 @@
+---
+interface Props {
+  title: string;
+  youtubeId: string;
+}
+
+const { title, youtubeId } = Astro.props;
+const thumbnail = `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
+---
+
+<article class="video-block">
+  <div class="video-frame">
+    <button class="video-start" type="button" data-youtube={youtubeId} data-title={title}>
+      <img class="video-thumb" src={thumbnail} alt="" loading="lazy" decoding="async" width="480" height="360" />
+      <span class="video-start-copy">
+        {title}
+        <span>Abspielen</span>
+      </span>
+    </button>
+  </div>
+</article>

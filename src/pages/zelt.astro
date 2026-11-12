@@ -1,5 +1,6 @@
 ---
 import { getEntry, render } from 'astro:content';
+import Video from '../components/Video.astro';
 import Base from '../layouts/Base.astro';
 import zelt from '../data/zelt.json';
 import { bild } from '../lib/bilder';
@@ -9,6 +10,10 @@ if (!seite) {
   throw new Error('Zelttext fehlt');
 }
 const { Content } = await render(seite);
+const aufbau = await getEntry('videos', 'aufbau-2013');
+if (!aufbau) {
+  throw new Error('Aufbau-Video fehlt');
+}
 const chapiteau = bild('hintergruende/chappi.JPG');
 const collage = zelt.collage.map((name) => bild(`zelt/web/${name}`));
 ---
@@ -23,6 +28,7 @@ const collage = zelt.collage.map((name) => bild(`zelt/web/${name}`));
     <div class="prose team-copy">
       <Content />
     </div>
+    <Video title={aufbau.data.title} youtubeId={aufbau.data.youtubeId} />
     <div class="collage">
       {
         collage.map((src, index) => (

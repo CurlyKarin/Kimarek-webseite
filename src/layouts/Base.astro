@@ -60,6 +60,29 @@ const documentTitle = title === verein.name ? title : `${title} · ${verein.name
         }
       })();
     </script>
+    <script is:inline>
+      (function () {
+        document.addEventListener('click', function (event) {
+          var node = event.target;
+          while (node && node !== document) {
+            if (node.classList && node.classList.contains('video-start')) break;
+            node = node.parentNode;
+          }
+          if (!node || node === document || !node.getAttribute) return;
+          var id = node.getAttribute('data-youtube') || '';
+          if (!/^[a-zA-Z0-9_-]{6,}$/.test(id)) return;
+          var frame = document.createElement('iframe');
+          frame.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1';
+          frame.title = node.getAttribute('data-title') || 'Video';
+          frame.setAttribute(
+            'allow',
+            'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture',
+          );
+          frame.setAttribute('allowfullscreen', 'true');
+          node.parentNode.replaceChild(frame, node);
+        });
+      })();
+    </script>
     <Footer portal={portal} />
   </body>
 </html>

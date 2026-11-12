@@ -658,7 +658,10 @@ h1 {
 
 .lightbox {
   position: fixed;
-  inset: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   max-width: none;
@@ -668,6 +671,7 @@ h1 {
   border: 0;
   background: transparent;
   color: white;
+  touch-action: manipulation;
 }
 
 .lightbox::backdrop {
@@ -675,17 +679,26 @@ h1 {
 }
 
 .lightbox-stage {
-  display: grid;
-  place-items: center;
-  height: 100%;
-  padding: 3.4rem 4.4rem 2.6rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
 .lightbox img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   display: block;
-  max-width: 100%;
-  max-height: calc(100vh - 6rem);
+  width: auto;
+  height: auto;
+  max-width: calc(100% - 0.6rem);
+  max-height: calc(100% - 4.8rem);
+  transform: translate(-50%, -50%);
   object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
 .lightbox-prev,
@@ -700,11 +713,23 @@ h1 {
 }
 
 .lightbox-prev,
+.lightbox-next,
+.lightbox-close,
+.lightbox-count {
+  z-index: 2;
+}
+
+.lightbox-prev,
 .lightbox-next {
   position: absolute;
   top: 50%;
-  width: 3rem;
-  height: 3.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-top: -1.375rem;
+  padding: 0;
   font-size: 1.6rem;
   line-height: 1;
 }

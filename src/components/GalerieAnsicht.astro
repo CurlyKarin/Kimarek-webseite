@@ -3,7 +3,7 @@ import { getCollection, getEntry } from 'astro:content';
 import Jahre from './Jahre.astro';
 import Seitenkopf from './Seitenkopf.astro';
 import Base from '../layouts/Base.astro';
-import { albumBilder, jahresCover } from '../lib/bilder';
+import { albumAnker, albumBilder, jahresCover } from '../lib/bilder';
 import { pfad } from '../lib/pfad';
 
 interface Props {
@@ -32,19 +32,22 @@ const istUebersicht = pfadName.endsWith('/galerie');
   <article class="wrap">
     <Seitenkopf seite={seite} title={seite.data.title} kicker={seite.data.kicker} text />
   </article>
-  <div class="wrap">
+  <div class="wrap galerie-inhalt">
     <Jahre
       aktuell={aktiv.data.year}
       jahre={jahre.map((eintrag) => ({
         year: eintrag.data.year,
         href: pfad(`/galerie/${eintrag.data.year}`),
         cover: jahresCover(eintrag.data.year, eintrag.data.alben, eintrag.data.cover),
-        alben: eintrag.data.alben.length,
+        alben: eintrag.data.alben.map((album) => ({
+          titel: album.titel,
+          anker: albumAnker(album.titel),
+        })),
       }))}
     />
     {
       aktiv.data.alben.map((album) => (
-        <section class="album">
+        <section class="album" id={albumAnker(album.titel)}>
           <h2>{album.titel}</h2>
           <div class="collage">
             {albumBilder(aktiv.data.year, album.titel).map((src, index) => (
@@ -129,6 +132,17 @@ const istUebersicht = pfadName.endsWith('/galerie');
       }
       collage.append(rowEl);
     });
+    merkAnker();
+  };
+
+  let ankerFolgen = location.hash.length > 1;
+  const merkAnker = () => {
+    if (!ankerFolgen) return;
+    const id = decodeURIComponent(location.hash.replace(/^#/, ''));
+    const ziel = id ? document.getElementById(id) : null;
+    if (ziel) ziel.scrollIntoView();
+    const bilder = [...document.querySelectorAll('.collage img')];
+    if (bilder.length > 0 && bilder.every((img) => img.complete)) ankerFolgen = false;
   };
 
   document.querySelectorAll('.collage').forEach((collage) => {

@@ -674,20 +674,55 @@ h1 {
   background: var(--blue);
 }
 
-.jahre-card-text {
+.jahre-bild,
+.jahre-zahl {
   display: block;
-  padding: 0.75rem 1rem 0.9rem;
+  color: inherit;
+  text-decoration: none;
 }
 
-.jahre-card-text span {
-  display: block;
-  margin-top: 0.15rem;
+.jahre-fuss {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.45rem 0.45rem 0.55rem 0.35rem;
 }
 
-.jahre-card:hover,
+.jahre-zahl {
+  padding: 0.35rem 0.65rem;
+}
+
+.jahre-alben {
+  list-style: none;
+  margin: 0 0 0 auto;
+  padding: 0;
+  text-align: right;
+}
+
+.jahre-alben a {
+  display: block;
+  margin-top: 0.12rem;
+  padding: 0.12rem 0.45rem;
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
 .jahre-card.is-aktiv {
   background: var(--yellow);
   color: var(--ink);
+}
+
+@media (hover: hover) {
+  .jahre-bild:hover + .jahre-fuss .jahre-zahl,
+  .jahre-zahl:hover,
+  .jahre-alben a:hover {
+    color: var(--red);
+  }
+}
+
+.jahre-zahl:active,
+.jahre-alben a:active {
+  color: var(--red);
 }
 
 .jahre-card strong {
@@ -702,12 +737,17 @@ h1 {
   }
 }
 
+main .wrap.galerie-inhalt {
+  padding-bottom: calc(100vh - 8rem);
+}
+
 .album {
   background: var(--sheet);
   border: 1px solid var(--line);
   border-radius: 0;
   padding: 1rem 1.1rem 1.15rem;
   margin: 0 0 0.8rem;
+  scroll-margin-top: 8rem;
 }
 
 .album h2 {

@@ -3,7 +3,7 @@ interface Jahr {
   year: number;
   href: string;
   cover?: string;
-  alben: number;
+  alben: { titel: string; anker: string }[];
 }
 
 interface Props {
@@ -19,23 +19,27 @@ const { jahre, aktuell } = Astro.props;
   <div class="jahre-scroller">
     {
       jahre.map((jahr) => (
-        <a
-          class:list={['jahre-card', { 'is-aktiv': jahr.year === aktuell }]}
-          href={jahr.href}
-          aria-current={jahr.year === aktuell ? 'page' : undefined}
-        >
-          {jahr.cover ? (
-            <img src={jahr.cover} alt="" />
-          ) : (
-            <span class="jahre-bild-leer" />
-          )}
-          <span class="jahre-card-text">
-            <strong>{jahr.year}</strong>
-            <span>
-              {jahr.alben} {jahr.alben === 1 ? 'Album' : 'Alben'}
-            </span>
-          </span>
-        </a>
+        <article class:list={['jahre-card', { 'is-aktiv': jahr.year === aktuell }]}>
+          <a class="jahre-bild" href={jahr.href} aria-label={String(jahr.year)}>
+            {jahr.cover ? (
+              <img src={jahr.cover} alt="" />
+            ) : (
+              <span class="jahre-bild-leer" />
+            )}
+          </a>
+          <div class="jahre-fuss">
+            <a class="jahre-zahl" href={jahr.href} aria-current={jahr.year === aktuell ? 'page' : undefined}>
+              <strong>{jahr.year}</strong>
+            </a>
+            <ul class="jahre-alben">
+              {jahr.alben.map((album) => (
+                <li>
+                  <a href={`${jahr.href}#${album.anker}`}>{album.titel}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </article>
       ))
     }
   </div>
@@ -73,7 +77,11 @@ const { jahre, aktuell } = Astro.props;
     scroller.addEventListener('scroll', update);
     window.addEventListener('resize', update);
     var aktiv = scroller.querySelector('.jahre-card.is-aktiv');
-    if (aktiv) scroller.scrollLeft = aktiv.offsetLeft;
+    if (aktiv) {
+      var rand = parseFloat(window.getComputedStyle(aktiv).marginRight) || 0;
+      var rechts = aktiv.offsetLeft + aktiv.offsetWidth + rand;
+      if (rechts > scroller.clientWidth) scroller.scrollLeft = rechts - scroller.clientWidth;
+    }
     update();
   })();
 </script>

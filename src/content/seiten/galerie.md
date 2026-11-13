@@ -4,4 +4,4 @@ description: Galerien der Kimarek-Jahre.
 kicker: Galerie
 ---
 
-Ein Klick auf ein Jahr wechselt die Alben.
+Ein Klick auf eine Woche springt zu ihren Fotos.

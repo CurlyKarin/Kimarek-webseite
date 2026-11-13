@@ -11,6 +11,18 @@ const albenOrdner: Record<string, string> = {
 
 type Galerie = Record<string, Record<string, string[]>>;
 
+export function albumAnker(titel: string) {
+  return titel
+    .trim()
+    .toLowerCase()
+    .replace(/ä/g, 'ae')
+    .replace(/ö/g, 'oe')
+    .replace(/ü/g, 'ue')
+    .replace(/ß/g, 'ss')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
 export function bild(path: string) {
   const clean = path.replace(/^\/+/, '');
   return `${bilderBasis}/${clean.split('/').map(encodeURIComponent).join('/')}`;

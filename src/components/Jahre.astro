@@ -8,9 +8,10 @@ interface Jahr {
 
 interface Props {
   jahre: Jahr[];
+  aktuell?: number;
 }
 
-const { jahre } = Astro.props;
+const { jahre, aktuell } = Astro.props;
 ---
 
 <div class="jahre-leiste">
@@ -18,7 +19,11 @@ const { jahre } = Astro.props;
   <div class="jahre-scroller">
     {
       jahre.map((jahr) => (
-        <a class="jahre-card" href={jahr.href}>
+        <a
+          class:list={['jahre-card', { 'is-aktiv': jahr.year === aktuell }]}
+          href={jahr.href}
+          aria-current={jahr.year === aktuell ? 'page' : undefined}
+        >
           {jahr.cover ? (
             <img src={jahr.cover} alt="" />
           ) : (
@@ -67,6 +72,8 @@ const { jahre } = Astro.props;
     });
     scroller.addEventListener('scroll', update);
     window.addEventListener('resize', update);
+    var aktiv = scroller.querySelector('.jahre-card.is-aktiv');
+    if (aktiv) scroller.scrollLeft = aktiv.offsetLeft;
     update();
   })();
 </script>

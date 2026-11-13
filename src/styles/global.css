@@ -642,6 +642,7 @@ h1 {
 }
 
 .jahre-scroller {
+  position: relative;
   flex: 1 1 auto;
   display: flex;
   min-width: 0;
@@ -683,7 +684,8 @@ h1 {
   margin-top: 0.15rem;
 }
 
-.jahre-card:hover {
+.jahre-card:hover,
+.jahre-card.is-aktiv {
   background: var(--yellow);
   color: var(--ink);
 }

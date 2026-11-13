@@ -563,6 +563,16 @@ h1 {
   padding-block: 2.4rem 0.4rem;
 }
 
+.page-lead {
+  margin-top: 0.85rem;
+  padding-bottom: 0;
+  max-width: 40rem;
+}
+
+.page-lead p:last-child {
+  margin-bottom: 0;
+}
+
 .prose {
   padding-bottom: 0.85rem;
   max-width: 46rem;
@@ -584,14 +594,58 @@ h1 {
   font-weight: 600;
 }
 
-.year-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
-  gap: 0.8rem;
-  padding-bottom: 3rem;
+.jahre-leiste {
+  display: flex;
+  align-items: center;
+  margin: 0.9rem 0 2rem;
 }
 
-.year-card {
+.jahre-prev,
+.jahre-next {
+  flex: 0 0 auto;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--yellow);
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  line-height: 2.75rem;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(3, 24, 48, 0.8);
+  cursor: pointer;
+}
+
+.jahre-prev {
+  margin-right: 0.4rem;
+}
+
+.jahre-next {
+  margin-left: 0.4rem;
+}
+
+.jahre-prev:disabled,
+.jahre-next:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.jahre-scroller {
+  flex: 1 1 auto;
+  display: flex;
+  min-width: 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.jahre-card {
+  flex: 0 0 78%;
+  margin-right: 0.7rem;
+  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   text-decoration: none;
@@ -602,29 +656,40 @@ h1 {
   overflow: hidden;
 }
 
-.year-card img {
+.jahre-card img,
+.jahre-bild-leer {
   display: block;
   width: 100%;
-  aspect-ratio: 3 / 2;
+  height: 11rem;
   object-fit: cover;
+  background: var(--blue);
 }
 
-.year-card-text {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
+.jahre-card-text {
+  display: block;
   padding: 0.75rem 1rem 0.9rem;
 }
 
-.year-card:hover {
+.jahre-card-text span {
+  display: block;
+  margin-top: 0.15rem;
+}
+
+.jahre-card:hover {
   background: var(--yellow);
   color: var(--ink);
 }
 
-.year-card strong {
+.jahre-card strong {
   font-family: var(--font-display);
   font-size: 1.8rem;
   font-weight: 500;
+}
+
+@media (min-width: 861px) {
+  .jahre-card {
+    flex-basis: calc((100% - 1.4rem) / 3);
+  }
 }
 
 .album {
@@ -637,6 +702,11 @@ h1 {
 
 .album h2 {
   font-size: 1.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.album .collage {
+  padding-bottom: 0;
 }
 
 .album-grid {

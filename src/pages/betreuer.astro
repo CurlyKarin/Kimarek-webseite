@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import Fotoreihe from '../components/Fotoreihe.astro';
+import Seitenkopf from '../components/Seitenkopf.astro';
 import Base from '../layouts/Base.astro';
 import betreuer from '../data/betreuer.json';
 import { bild } from '../lib/bilder';
@@ -17,10 +18,7 @@ const collage = betreuer.collage.map((name) => bild(`betreuer/${name}`));
 
 <Base title={seite.data.title} description={seite.data.description} hintergrund={pfad('/media/zelt.jpg')}>
   <article class="wrap feature">
-    <header class="page-head">
-      {seite.data.kicker && <p class="kicker">{seite.data.kicker}</p>}
-      <h1>{seite.data.title}</h1>
-    </header>
+    <Seitenkopf title={seite.data.title} kicker={seite.data.kicker} />
     <Fotoreihe label="Fotos des Betreuerteams" fotos={wechsel.map((src) => ({ src, alt: '' }))} />
     <div class="prose team-copy">
       <Content />

@@ -1,5 +1,6 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { getCollection } from 'astro:content';
+import Seitenkopf from '../components/Seitenkopf.astro';
 import Base from '../layouts/Base.astro';
 
 export async function getStaticPaths() {
@@ -15,7 +16,8 @@ export async function getStaticPaths() {
         seite.id !== 'kinderwoche' &&
         seite.id !== 'jugendwoche' &&
         seite.id !== 'ablauf' &&
-        seite.id !== 'videos',
+        seite.id !== 'videos' &&
+        seite.id !== 'galerie',
     )
     .map((seite) => ({
       params: { slug: seite.id },
@@ -24,17 +26,10 @@ export async function getStaticPaths() {
 }
 
 const { seite } = Astro.props;
-const { Content } = await render(seite);
 ---
 
 <Base title={seite.data.title} description={seite.data.description}>
   <article class="wrap">
-    <header class="page-head">
-      {seite.data.kicker && <p class="kicker">{seite.data.kicker}</p>}
-      <h1>{seite.data.title}</h1>
-    </header>
-    <div class="prose">
-      <Content />
-    </div>
+    <Seitenkopf seite={seite} title={seite.data.title} kicker={seite.data.kicker} text />
   </article>
 </Base>

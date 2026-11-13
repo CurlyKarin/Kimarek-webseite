@@ -1,0 +1,72 @@
+---
+interface Jahr {
+  year: number;
+  href: string;
+  cover?: string;
+  alben: number;
+}
+
+interface Props {
+  jahre: Jahr[];
+}
+
+const { jahre } = Astro.props;
+---
+
+<div class="jahre-leiste">
+  <button type="button" class="jahre-prev" aria-label="Neuere Jahre">←</button>
+  <div class="jahre-scroller">
+    {
+      jahre.map((jahr) => (
+        <a class="jahre-card" href={jahr.href}>
+          {jahr.cover ? (
+            <img src={jahr.cover} alt="" />
+          ) : (
+            <span class="jahre-bild-leer" />
+          )}
+          <span class="jahre-card-text">
+            <strong>{jahr.year}</strong>
+            <span>
+              {jahr.alben} {jahr.alben === 1 ? 'Album' : 'Alben'}
+            </span>
+          </span>
+        </a>
+      ))
+    }
+  </div>
+  <button type="button" class="jahre-next" aria-label="Ältere Jahre">→</button>
+</div>
+
+<script is:inline>
+  (function () {
+    var root = document.querySelector('.jahre-leiste');
+    if (!root) return;
+    var scroller = root.querySelector('.jahre-scroller');
+    var prev = root.querySelector('.jahre-prev');
+    var next = root.querySelector('.jahre-next');
+    if (!scroller || !prev || !next) return;
+
+    function step() {
+      var card = scroller.querySelector('.jahre-card');
+      if (!card) return 0;
+      var margin = parseFloat(window.getComputedStyle(card).marginRight) || 0;
+      return card.getBoundingClientRect().width + margin;
+    }
+
+    function update() {
+      var max = scroller.scrollWidth - scroller.clientWidth;
+      prev.disabled = scroller.scrollLeft <= 2;
+      next.disabled = scroller.scrollLeft >= max - 2;
+    }
+
+    prev.addEventListener('click', function () {
+      scroller.scrollTo({ left: scroller.scrollLeft - step(), behavior: 'smooth' });
+    });
+    next.addEventListener('click', function () {
+      scroller.scrollTo({ left: scroller.scrollLeft + step(), behavior: 'smooth' });
+    });
+    scroller.addEventListener('scroll', update);
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>

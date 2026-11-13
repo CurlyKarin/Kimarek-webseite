@@ -1,5 +1,6 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
+import Seitenkopf from '../components/Seitenkopf.astro';
 import Video from '../components/Video.astro';
 import Base from '../layouts/Base.astro';
 import { pfad } from '../lib/pfad';
@@ -13,10 +14,7 @@ const videos = (await getCollection('videos')).sort((a, b) => a.data.order - b.d
 
 <Base title={seite.data.title} description={seite.data.description} hintergrund={pfad('/media/zelt.jpg')}>
   <article class="wrap feature">
-    <header class="page-head">
-      {seite.data.kicker && <p class="kicker">{seite.data.kicker}</p>}
-      <h1>{seite.data.title}</h1>
-    </header>
+    <Seitenkopf seite={seite} title={seite.data.title} kicker={seite.data.kicker} text />
     <div class="prose team-copy">
       <p>
         Die Vorschau zeigt ein Standbild von YouTube. Das Video selbst startet erst, wenn du auf Abspielen klickst — dann wird

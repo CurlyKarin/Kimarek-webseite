@@ -35,6 +35,8 @@ const jahre = defineCollection({
   schema: z.object({
     title: z.string(),
     year: z.number(),
+    // Pfad im Bilder-Speicher. Leer: erstes Foto des ersten Albums.
+    cover: z.string().optional(),
     alben: z.array(
       z.object({
         titel: z.string(),

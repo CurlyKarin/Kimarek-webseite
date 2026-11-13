@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
 import Abschnitte from '../components/Abschnitte.astro';
+import Seitenkopf from '../components/Seitenkopf.astro';
 import Base from '../layouts/Base.astro';
 import { pfad } from '../lib/pfad';
 
@@ -13,10 +14,7 @@ const abschnitte = (await getCollection('vorstand')).sort((a, b) => a.data.order
 
 <Base title={seite.data.title} description={seite.data.description} hintergrund={pfad('/media/zelt.jpg')}>
   <article class="wrap">
-    <header class="page-head">
-      {seite.data.kicker && <p class="kicker">{seite.data.kicker}</p>}
-      <h1>{seite.data.title}</h1>
-    </header>
+    <Seitenkopf seite={seite} title={seite.data.title} kicker={seite.data.kicker} text />
     <Abschnitte abschnitte={abschnitte} />
   </article>
 </Base>

@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import Fotoreihe from '../components/Fotoreihe.astro';
+import Seitenkopf from '../components/Seitenkopf.astro';
 import Base from '../layouts/Base.astro';
 import gruppen from '../data/gruppenfotos.json';
 import jugend from '../data/jugend.json';
@@ -18,10 +19,7 @@ const collage = jugend.collage.map((name) => bild(`jugend/${name}`));
 
 <Base title={seite.data.title} description={seite.data.description} hintergrund={hintergrund}>
   <article class="wrap feature">
-    <header class="page-head">
-      {seite.data.kicker && <p class="kicker">{seite.data.kicker}</p>}
-      <h1>{seite.data.title}</h1>
-    </header>
+    <Seitenkopf title={seite.data.title} kicker={seite.data.kicker} />
     <Fotoreihe label="Gruppenfotos der Jugendwochen" fotos={wechsel.map((src) => ({ src, alt: '' }))} />
     <div class="prose team-copy">
       <Content />

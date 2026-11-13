@@ -1,6 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import Fotoreihe from '../components/Fotoreihe.astro';
+import Seitenkopf from '../components/Seitenkopf.astro';
 import Video from '../components/Video.astro';
 import Base from '../layouts/Base.astro';
 import zelt from '../data/zelt.json';
@@ -21,10 +22,7 @@ const collage = zelt.collage.map((name) => bild(`zelt/web/${name}`));
 
 <Base title={seite.data.title} description={seite.data.description} hintergrund={chapiteau}>
   <article class="wrap feature">
-    <header class="page-head">
-      {seite.data.kicker && <p class="kicker">{seite.data.kicker}</p>}
-      <h1>{seite.data.title}</h1>
-    </header>
+    <Seitenkopf title={seite.data.title} kicker={seite.data.kicker} />
     <Fotoreihe
       label="Foto des Zeltes"
       fotos={[{ src: chapiteau, alt: 'Rot-gelbes Chapiteau mit Zaun und Bank davor' }]}

@@ -1,0 +1,28 @@
+---
+import { render } from 'astro:content';
+
+interface Props {
+  title: string;
+  kicker?: string;
+  seite?: { body?: string };
+  text?: boolean;
+}
+
+const { title, kicker, seite, text = false } = Astro.props;
+const hatText = Boolean(text && seite?.body?.trim());
+const Inhalt = hatText ? (await render(seite as never)).Content : null;
+---
+
+<header class="page-head">
+  <slot name="kicker">
+    {kicker && <p class="kicker">{kicker}</p>}
+  </slot>
+  <h1>{title}</h1>
+  {
+    Inhalt && (
+      <div class="prose page-lead">
+        <Inhalt />
+      </div>
+    )
+  }
+</header>

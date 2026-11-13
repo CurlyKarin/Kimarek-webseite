@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import Seitenkopf from '../../components/Seitenkopf.astro';
 import Base from '../../layouts/Base.astro';
 import { albumBilder } from '../../lib/bilder';
 import { pfad } from '../../lib/pfad';
@@ -18,19 +19,18 @@ const jahre = (await getCollection('jahre')).sort((a, b) => b.data.year - a.data
 
 <Base title={String(jahr.data.year)} description={`Kimarek-Galerie ${jahr.data.year}`}>
   <div class="wrap">
-    <header class="page-head">
-      <p class="kicker">
+    <Seitenkopf title={String(jahr.data.year)}>
+      <p slot="kicker" class="kicker">
         <a href={pfad('/galerie')}>Galerie</a>
       </p>
-      <h1>{jahr.data.year}</h1>
-    </header>
+    </Seitenkopf>
     {
       jahr.data.alben.map((album) => (
         <section class="album">
           <h2>{album.titel}</h2>
-          <div class="album-grid">
+          <div class="collage">
             {albumBilder(jahr.data.year, album.titel).map((src, index) => (
-              <button type="button" class="album-open">
+              <button type="button" class="collage-open">
                 <img
                   src={src}
                   alt={`Aufnahme ${index + 1} aus ${album.titel} ${jahr.data.year}`}
@@ -82,13 +82,65 @@ const jahre = (await getCollection('jahre')).sort((a, b) => b.data.year - a.data
     if (count) count.textContent = `${index + 1} / ${photos.length}`;
   };
 
-  document.querySelectorAll('.album-open').forEach((button) => {
-    button.addEventListener('click', () => {
-      const grid = button.closest('.album-grid');
-      photos = [...(grid?.querySelectorAll('img') ?? [])];
-      const current = button.querySelector('img');
-      show(photos.indexOf(current as HTMLImageElement));
-      if (dialog instanceof HTMLDialogElement) dialog.showModal();
+  const layout = (collage: Element) => {
+    const buttons = [...collage.querySelectorAll('button')];
+    const width = collage.clientWidth;
+    if (!width || buttons.length === 0) return;
+    const gap = 4;
+    const target = width < 640 ? 118 : 168;
+    const items = buttons.map((button) => {
+      const img = button.querySelector('img');
+      const ratio = img instanceof HTMLImageElement && img.naturalWidth ? img.naturalWidth / img.naturalHeight : 1.5;
+      return { button, ratio };
+    });
+    const rows: { button: HTMLButtonElement; ratio: number }[][] = [];
+    let row: { button: HTMLButtonElement; ratio: number }[] = [];
+    let sum = 0;
+    for (const item of items) {
+      row.push(item);
+      sum += item.ratio;
+      if (sum * target + gap * (row.length - 1) >= width) {
+        rows.push(row);
+        row = [];
+        sum = 0;
+      }
+    }
+    if (row.length) rows.push(row);
+
+    collage.replaceChildren();
+    rows.forEach((group, rowIndex) => {
+      const rowEl = document.createElement('div');
+      rowEl.className = 'collage-row';
+      const ratioSum = group.reduce((total, item) => total + item.ratio, 0);
+      const natural = ratioSum * target + gap * (group.length - 1);
+      const last = rowIndex === rows.length - 1 && natural < width * 0.92;
+      const height = last ? target : (width - gap * (group.length - 1)) / ratioSum;
+      rowEl.style.height = `${height}px`;
+      for (const item of group) {
+        item.button.style.flex = last ? '0 0 auto' : `${item.ratio} ${item.ratio} 0`;
+        item.button.style.width = last ? `${height * item.ratio}px` : '';
+        rowEl.append(item.button);
+      }
+      collage.append(rowEl);
+    });
+  };
+
+  document.querySelectorAll('.collage').forEach((collage) => {
+    const schedule = () => {
+      requestAnimationFrame(() => layout(collage));
+    };
+    collage.querySelectorAll('img').forEach((img) => {
+      if (!img.complete) img.addEventListener('load', schedule);
+    });
+    schedule();
+    window.addEventListener('resize', schedule);
+    collage.querySelectorAll('.collage-open').forEach((button) => {
+      button.addEventListener('click', () => {
+        photos = [...collage.querySelectorAll('.collage-open img')];
+        const current = button.querySelector('img');
+        show(photos.indexOf(current as HTMLImageElement));
+        if (dialog instanceof HTMLDialogElement) dialog.showModal();
+      });
     });
   });
 

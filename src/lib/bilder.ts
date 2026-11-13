@@ -28,7 +28,8 @@ export function albumBilder(year: number, titel: string) {
   return albumDateien(year, titel).map((name) => bild(`galerie/${year}/${ordner}/${name}`));
 }
 
-export function jahresCover(year: number, alben: { titel: string }[]) {
+export function jahresCover(year: number, alben: { titel: string }[], cover?: string) {
+  if (cover && cover.trim()) return bild(cover.trim());
   for (const album of alben) {
     const [erstes] = albumBilder(year, album.titel);
     if (erstes) return erstes;

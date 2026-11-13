@@ -1,38 +1,30 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
+import Jahre from '../../components/Jahre.astro';
+import Seitenkopf from '../../components/Seitenkopf.astro';
 import Base from '../../layouts/Base.astro';
 import { jahresCover } from '../../lib/bilder';
 import { pfad } from '../../lib/pfad';
 
+const seite = await getEntry('seiten', 'galerie');
+if (!seite) {
+  throw new Error('Galerieseite fehlt');
+}
 const jahre = (await getCollection('jahre')).sort((a, b) => b.data.year - a.data.year);
 ---
 
-<Base
-  title="Die letzten Jahre"
-  description="Galerien der Kimarek-Jahre."
->
+<Base title={seite.data.title} description={seite.data.description} hintergrund={pfad('/media/zelt.jpg')}>
+  <article class="wrap">
+    <Seitenkopf seite={seite} title={seite.data.title} kicker={seite.data.kicker} text />
+  </article>
   <div class="wrap">
-    <header class="page-head">
-      <p class="kicker">Galerie</p>
-      <h1>Die letzten Jahre</h1>
-    </header>
-    <div class="prose">
-      <p>Die Fotos der bisherigen Jahresgalerien. Ein Klick auf ein Jahr öffnet die Alben.</p>
-    </div>
-    <div class="year-grid">
-      {
-        jahre.map((jahr) => (
-          <a class="year-card" href={pfad(`/galerie/${jahr.data.year}`)}>
-            <img src={jahresCover(jahr.data.year, jahr.data.alben)} alt="" />
-            <span class="year-card-text">
-              <strong>{jahr.data.year}</strong>
-              <span>
-                {jahr.data.alben.length} {jahr.data.alben.length === 1 ? 'Album' : 'Alben'}
-              </span>
-            </span>
-          </a>
-        ))
-      }
-    </div>
+    <Jahre
+      jahre={jahre.map((jahr) => ({
+        year: jahr.data.year,
+        href: pfad(`/galerie/${jahr.data.year}`),
+        cover: jahresCover(jahr.data.year, jahr.data.alben, jahr.data.cover),
+        alben: jahr.data.alben.length,
+      }))}
+    />
   </div>
 </Base>

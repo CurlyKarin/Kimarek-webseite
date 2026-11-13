@@ -595,21 +595,22 @@ h1 {
 }
 
 .jahre-leiste {
-  display: flex;
-  align-items: center;
+  position: relative;
   margin: 0.9rem 0 2rem;
 }
 
 .jahre-prev,
 .jahre-next {
-  flex: 0 0 auto;
+  position: absolute;
+  top: 4.125rem;
+  z-index: 2;
   width: 2.75rem;
   height: 2.75rem;
   margin: 0;
   padding: 0;
   border: 0;
   border-radius: 0;
-  background: transparent;
+  background: rgba(3, 24, 48, 0.22);
   color: var(--yellow);
   font-family: var(--font-display);
   font-size: 1.6rem;
@@ -620,11 +621,18 @@ h1 {
 }
 
 .jahre-prev {
-  margin-right: 0.4rem;
+  left: 0.35rem;
 }
 
 .jahre-next {
-  margin-left: 0.4rem;
+  right: 0.35rem;
+}
+
+@media (max-width: 860px) {
+  .jahre-prev,
+  .jahre-next {
+    display: none;
+  }
 }
 
 .jahre-prev:disabled,

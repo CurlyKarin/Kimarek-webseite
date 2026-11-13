@@ -477,11 +477,20 @@ h1 {
 }
 
 .remind a {
-  display: block;
+  display: flex;
+  align-items: center;
   width: fit-content;
   margin-top: 0.35rem;
   font-family: var(--font-display);
   font-weight: 500;
+}
+
+.remind-icon {
+  display: block;
+  width: 1.15em;
+  height: 1.15em;
+  margin-right: 0.4rem;
+  flex: 0 0 auto;
 }
 
 .ticket {

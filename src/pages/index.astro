@@ -36,7 +36,13 @@ const TerminInhalt = terminText?.Content;
       </div>
       <p class="remind">
         Nicht verpassen. Jedes Jahr am 1. Februar um 9 Uhr öffnet die Anmeldung.
-        <a href={pfad('/anmeldung.ics')}>Erinnerung in den Kalender legen</a>
+        <a href={pfad('/anmeldung.ics')}>
+          <svg class="remind-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="16" fill="none" stroke="currentColor" stroke-width="2" />
+            <path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="2" />
+          </svg>
+          Erinnerung in den Kalender legen
+        </a>
       </p>
     </div>
     {

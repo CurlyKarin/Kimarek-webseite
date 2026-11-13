@@ -21,8 +21,11 @@ Inhaltsseiten bestehen aus wenigen festen Bausteinen. Der Vorstand soll später 
 | --- | --- | --- |
 | **Abschnitt** | Nur Text, Text und Foto, oder Foto und Text. Text und Foto sitzen in einem Kasten, der Abstand dazwischen hat dieselbe Fläche. | `src/components/Abschnitte.astro`, Beiträge in `src/content/geschichte`, `ablauf` und `vorstand` |
 | **Fotoreihe** | Ein Foto bleibt stehen. Mehrere wechseln alle drei Sekunden. Ein Klick öffnet dieselbe Ansicht wie in der Galerie, nur mit den Fotos dieser Reihe. | `src/components/Fotoreihe.astro`. Die Listen stehen noch in `src/data/gruppenfotos.json` und `betreuer.json`; das Zelt hat vorerst ein einzelnes Foto. |
-| **Collage** | Viele kleine Fotos unter dem Text. Ein Klick öffnet dieselbe Ansicht, nur für diese Fotos. Als eigener Baustein im Code noch nicht herausgelöst. | Direkt auf den Seiten Betreuer, Zelt, Kinderwoche und Jugendwoche. Die Dateinamen stehen in `src/data/betreuer.json`, `zelt.json`, `kinder.json` und `jugend.json`. |
+| **Collage** | Viele kleine Fotos, ohne Überschrift, offen auf dem Hintergrund. Ein Klick öffnet dieselbe Ansicht, nur für diese Fotos. Als eigener Baustein im Code noch nicht herausgelöst. | Direkt auf den Seiten Betreuer, Zelt, Kinderwoche und Jugendwoche. Die Dateinamen stehen in `src/data/betreuer.json`, `zelt.json`, `kinder.json` und `jugend.json`. |
+| **Album** | Eine Collage mit Überschrift. Titel und Fotos liegen zusammen auf heller Fläche. | Die Wochen der Galerie in `src/components/GalerieAnsicht.astro`. Die Titel stehen in `src/content/jahre`. |
 | **Video** | Titel und Standbild. Der Film startet erst beim Abspielen, über `youtube-nocookie.com`. Das Standbild kommt von YouTube. | `src/components/Video.astro`, Beiträge in `src/content/videos` |
+
+Hat eine Collage einen Titel, ist sie ein Album und hell hinterlegt. Ohne Titel liegen die Fotos offen auf dem Hintergrund.
 
 Zum Foto gehört ein Alt-Text. Bei einem Abschnitt legt `zuerst` fest, ob der Text oder das Foto zuerst kommt.
 

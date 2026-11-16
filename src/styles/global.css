@@ -659,7 +659,15 @@ h1 {
   color: var(--red);
 }
 
-.trio article img,
+.trio article img {
+  display: block;
+  width: calc(100% + 2.4rem);
+  max-width: none;
+  height: 11rem;
+  object-fit: cover;
+  margin: -1.1rem -1.2rem 0.8rem;
+}
+
 .meldungen article img {
   display: block;
   width: 100%;

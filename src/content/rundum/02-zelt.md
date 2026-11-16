@@ -1,8 +1,10 @@
 ---
 order: 2
-title: Das Zeltlager
+title: Das Chapiteau
 link: /zelt
-linkText: Das Chapiteau
+linkText: Zum Zelt
+bild: hintergruende/chappi.JPG
+alt: Rot-gelbes Chapiteau mit Zaun und Bank davor
 ---
 
-Geschlafen wird in Zeltgruppen, gekocht vom Küchenteam. Dazwischen gibt es Spiele, Disco, Lagerfeuer und das Kimarek-Burger-Essen.
+Das rot-gelbe Zirkuszelt heißt Chapiteau. In der Mitte liegt die Manege, neun Meter im Kreis. Am Ende der Woche schauen hier bis zu 350 Leute zu.

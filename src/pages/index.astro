@@ -17,7 +17,7 @@ const aktuell = termine.sort((a, b) => b.data.year - a.data.year)[0];
 const terminText = aktuell ? await render(aktuell) : null;
 const TerminInhalt = terminText?.Content;
 
-type Karte = CollectionEntry<'aktuelles'> | CollectionEntry<'rundum'> | CollectionEntry<'foerderung'>;
+type Karte = CollectionEntry<'aktuelles'> | CollectionEntry<'rundum'> | CollectionEntry<'foerderung'> | CollectionEntry<'netzwerke'>;
 
 async function karten<T extends Karte>(eintraege: T[]) {
   return Promise.all(
@@ -41,6 +41,9 @@ const foerderungen = (
   await karten((await getCollection('foerderung')).sort((a, b) => a.data.order - b.data.order))
 ).filter(({ eintrag, Inhalt }) =>
   Boolean(eintrag.data.bild || eintrag.data.title?.trim() || eintrag.data.link || Inhalt),
+);
+const netzwerke = await karten(
+  (await getCollection('netzwerke')).sort((a, b) => a.data.order - b.data.order),
 );
 
 function adresse(link: string) {
@@ -106,13 +109,29 @@ function foto(src: string) {
         </div>
       )
     }
-    <a class="facebook-card panel" href={verein.facebook}>
-      <img src={pfad('/media/facebook.png')} alt="" width="200" height="200" />
-      <span>
-        <strong>Kinderzirkus Kimarek</strong>
-        <span>{verein.facebookInfo}</span>
-      </span>
-    </a>
+    {
+      netzwerke.length > 0 && (
+        <div class="hero-sozial">
+          {
+            netzwerke.map(({ eintrag, Inhalt }) => (
+              <a class:list={['sozial-card', 'panel', { 'hat-bild': eintrag.data.bild }]} href={eintrag.data.link}>
+                {eintrag.data.bild && <img src={foto(eintrag.data.bild)} alt={eintrag.data.alt ?? ''} width="200" height="200" />}
+                <div>
+                  <strong>{eintrag.data.title}</strong>
+                  {
+                    Inhalt && (
+                      <div class="sozial-info">
+                        <Inhalt />
+                      </div>
+                    )
+                  }
+                </div>
+              </a>
+            ))
+          }
+        </div>
+      )
+    }
   </div>
 
   <section class="wrap band">

@@ -6,6 +6,4 @@ export const verein = {
   mail: 'zirkus@kimarek.de',
   telefon: '0171 2144950',
   telefonHref: 'tel:+491712144950',
-  facebook: 'https://www.facebook.com/kimarek/',
-  facebookInfo: 'Zirkuszeltlager für 8-16-Jährige in den Sommerferien.',
 };

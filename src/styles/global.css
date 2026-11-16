@@ -1239,9 +1239,13 @@ body.page-open .story:not(.story-only) .story-text {
   margin-inline: auto;
 }
 
-.facebook-card {
+.hero-sozial {
   display: grid;
-  grid-template-columns: 5.5rem 1fr;
+  gap: 1rem;
+}
+
+.sozial-card {
+  display: grid;
   gap: 0.9rem;
   align-items: center;
   margin-top: 0;
@@ -1249,13 +1253,17 @@ body.page-open .story:not(.story-only) .story-text {
   text-decoration: none;
 }
 
-.facebook-card img {
+.sozial-card.hat-bild {
+  grid-template-columns: 5.5rem 1fr;
+}
+
+.sozial-card img {
   width: 5.5rem;
   height: 5.5rem;
   object-fit: cover;
 }
 
-.facebook-card strong {
+.sozial-card strong {
   display: block;
   font-family: var(--font-display);
   font-weight: 500;
@@ -1263,9 +1271,10 @@ body.page-open .story:not(.story-only) .story-text {
   line-height: 1.2;
 }
 
-.facebook-card span span {
+.sozial-info,
+.sozial-info p {
   display: block;
-  margin-top: 0.25rem;
+  margin: 0.25rem 0 0;
   color: var(--ink-soft);
 }
 

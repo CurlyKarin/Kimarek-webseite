@@ -155,4 +155,33 @@ const aktuelles = defineCollection({
   ),
 });
 
-export const collections = { seiten, termine, jahre, geschichte, ablauf, vorstand, videos, aktuelles, rundum, foerderung };
+const netzwerke = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/netzwerke' }),
+  schema: z
+    .object({
+      order: z.number(),
+      title: z.string(),
+      netzwerk: z.string(),
+      link: z.string().url(),
+      bild: z.string().optional(),
+      alt: z.string().optional(),
+    })
+    .refine((eintrag) => !eintrag.bild || eintrag.alt !== undefined, {
+      message: 'Zum Foto gehört ein Alt-Text, leer wenn der Name daneben steht.',
+      path: ['alt'],
+    }),
+});
+
+export const collections = {
+  seiten,
+  termine,
+  jahre,
+  geschichte,
+  ablauf,
+  vorstand,
+  videos,
+  aktuelles,
+  rundum,
+  foerderung,
+  netzwerke,
+};

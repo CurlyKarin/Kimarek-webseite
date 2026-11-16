@@ -1424,6 +1424,23 @@ body.page-open .story:not(.story-only) .story-text {
   .brand img {
     height: 6rem;
   }
+
+  .site-header.is-kompakt .header-bar {
+    min-height: 0;
+    padding-block: 0.3rem;
+  }
+
+  .site-header.is-kompakt .brand {
+    display: block;
+    height: 2.35rem;
+    overflow: hidden;
+  }
+
+  .site-header.is-kompakt .brand img {
+    display: block;
+    height: 6rem;
+    margin-top: -2.25rem;
+  }
 }
 
 @media (min-width: 861px) {

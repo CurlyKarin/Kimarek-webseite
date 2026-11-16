@@ -88,4 +88,18 @@ const path = Astro.url.pathname;
     if (!(target instanceof Node) || header?.contains(target)) return;
     closeNav();
   });
+
+  const compactQuery = window.matchMedia('(max-width: 860px)');
+  const syncCompact = () => {
+    if (!header) return;
+    const y = window.scrollY;
+    let kompakt = header.classList.contains('is-kompakt');
+    if (!compactQuery.matches) kompakt = false;
+    else if (y > 48) kompakt = true;
+    else if (y < 8) kompakt = false;
+    header.classList.toggle('is-kompakt', kompakt);
+  };
+  syncCompact();
+  window.addEventListener('scroll', syncCompact, { passive: true });
+  window.addEventListener('resize', syncCompact);
 </script>

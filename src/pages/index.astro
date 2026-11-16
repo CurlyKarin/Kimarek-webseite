@@ -17,7 +17,7 @@ const aktuell = termine.sort((a, b) => b.data.year - a.data.year)[0];
 const terminText = aktuell ? await render(aktuell) : null;
 const TerminInhalt = terminText?.Content;
 
-type Karte = CollectionEntry<'aktuelles'> | CollectionEntry<'rundum'>;
+type Karte = CollectionEntry<'aktuelles'> | CollectionEntry<'rundum'> | CollectionEntry<'foerderung'>;
 
 async function karten<T extends Karte>(eintraege: T[]) {
   return Promise.all(
@@ -37,6 +37,11 @@ const meldungen = await karten(
 const hinweise = await karten(
   (await getCollection('rundum')).sort((a, b) => a.data.order - b.data.order),
 );
+const foerderungen = (
+  await karten((await getCollection('foerderung')).sort((a, b) => a.data.order - b.data.order))
+).filter(({ eintrag, Inhalt }) =>
+  Boolean(eintrag.data.bild || eintrag.data.title?.trim() || eintrag.data.link || Inhalt),
+);
 
 function adresse(link: string) {
   return /^https?:\/\//.test(link) ? link : pfad(link);
@@ -51,17 +56,19 @@ function foto(src: string) {
   <div class="wrap hero">
     <div>
       <Seitenkopf seite={start} title={start.data.title} kicker={start.data.kicker} text />
-      <Countdown saisons={termine.map((termin) => ({ year: termin.data.year, saisonEnde: termin.data.saisonEnde }))} />
-      <p class="remind">
-        Nicht verpassen. Jedes Jahr am 1. Februar um 9 Uhr öffnet die Anmeldung.
-        <a href={pfad('/anmeldung.ics')}>
-          <svg class="remind-icon" viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="3" y="5" width="18" height="16" fill="none" stroke="currentColor" stroke-width="2" />
-            <path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="2" />
-          </svg>
-          Erinnerung in den Kalender legen
-        </a>
-      </p>
+      <Countdown saisons={termine.map((termin) => ({ year: termin.data.year, saisonEnde: termin.data.saisonEnde }))}>
+        {
+          aktuell?.data.kalendererinnerung && (
+            <a class="countdown-kalendererinnerung" href={pfad('/anmeldung.ics')}>
+              <svg class="remind-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="16" fill="none" stroke="currentColor" stroke-width="2" />
+                <path d="M3 10h18M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="2" />
+              </svg>
+              Kalendererinnerung
+            </a>
+          )
+        }
+      </Countdown>
     </div>
     {
       aktuell && (
@@ -96,16 +103,16 @@ function foto(src: string) {
               </a>
             </div>
           </article>
-          <a class="facebook-card panel" href={verein.facebook}>
-            <img src={pfad('/media/facebook.png')} alt="" width="200" height="200" />
-            <span>
-              <strong>Kinderzirkus Kimarek</strong>
-              <span>{verein.facebookInfo}</span>
-            </span>
-          </a>
         </div>
       )
     }
+    <a class="facebook-card panel" href={verein.facebook}>
+      <img src={pfad('/media/facebook.png')} alt="" width="200" height="200" />
+      <span>
+        <strong>Kinderzirkus Kimarek</strong>
+        <span>{verein.facebookInfo}</span>
+      </span>
+    </a>
   </div>
 
   <section class="wrap band">
@@ -151,5 +158,45 @@ function foto(src: string) {
         ))
       }
     </div>
+    {
+      foerderungen.length > 0 && (
+        <>
+          <h2 class="band-folge">Förderung</h2>
+          <ul class="foerderung">
+            {
+              foerderungen.map(({ eintrag, Inhalt }) => (
+                <li>
+                  {
+                    eintrag.data.bild &&
+                      (eintrag.data.bildLink && eintrag.data.link ? (
+                        <a class="foerderung-bild" href={adresse(eintrag.data.link)}>
+                          <img src={foto(eintrag.data.bild)} alt={eintrag.data.alt ?? ''} />
+                        </a>
+                      ) : (
+                        <img src={foto(eintrag.data.bild)} alt={eintrag.data.alt ?? ''} />
+                      ))
+                  }
+                  {eintrag.data.title && <strong>{eintrag.data.title}</strong>}
+                  {
+                    Inhalt && (
+                      <div class="karte-text">
+                        <Inhalt />
+                      </div>
+                    )
+                  }
+                  {
+                    eintrag.data.link && eintrag.data.linkText && (
+                      <a class="foerderung-link" href={adresse(eintrag.data.link)}>
+                        {eintrag.data.linkText}
+                      </a>
+                    )
+                  }
+                </li>
+              ))
+            }
+          </ul>
+        </>
+      )
+    }
   </section>
 </Base>

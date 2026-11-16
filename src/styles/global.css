@@ -297,10 +297,20 @@ main .wrap {
 
 .hero {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 2.5rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem 2.5rem;
   align-items: start;
-  padding-block: 3.2rem 2rem;
+  padding-top: 1.5rem;
+  padding-bottom: 0.4rem;
+}
+
+.hero .page-head {
+  padding: 0;
+}
+
+.hero-neben {
+  display: grid;
+  gap: 1rem;
 }
 
 .kicker {
@@ -546,6 +556,11 @@ h1 {
   color: var(--ink-soft);
 }
 
+.ticket .actions {
+  margin-top: 0;
+  padding: 0 1.2rem 1.15rem;
+}
+
 .note p:first-child {
   margin-top: 0;
 }
@@ -561,11 +576,54 @@ h1 {
 }
 
 .trio article,
+.meldungen article,
 .panel {
   background: var(--sheet);
   border: 1px solid var(--line);
   border-radius: 0;
   padding: 1.1rem 1.2rem 1.2rem;
+}
+
+.meldungen {
+  display: grid;
+  gap: 1rem;
+}
+
+.band-folge {
+  margin-top: 2.2rem;
+}
+
+.trio article img,
+.meldungen article img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 0.8rem;
+}
+
+.trio article img:last-child,
+.meldungen article img:last-child {
+  margin-bottom: 0;
+}
+
+.nur-bild img {
+  max-width: 26rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.karte-text p {
+  margin: 0;
+}
+
+.meldungen .karte-text {
+  max-width: 40rem;
+}
+
+.trio article > a,
+.meldungen article > a {
+  display: inline-block;
+  margin-top: 0.85rem;
 }
 
 .page-head {
@@ -1120,7 +1178,7 @@ body.page-open .story:not(.story-only) .story-text {
   grid-template-columns: 5.5rem 1fr;
   gap: 0.9rem;
   align-items: center;
-  margin-top: 0.85rem;
+  margin-top: 0;
   color: var(--ink);
   text-decoration: none;
 }

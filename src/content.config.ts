@@ -84,4 +84,46 @@ const videos = defineCollection({
   }),
 });
 
-export const collections = { seiten, termine, jahre, geschichte, ablauf, vorstand, videos };
+const datum = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/)
+  .optional();
+
+function mitKarte<T extends z.ZodRawShape>(schema: z.ZodObject<T>) {
+  return schema
+    .refine((eintrag) => !('bild' in eintrag && eintrag.bild) || Boolean(eintrag.alt?.trim()), {
+      message: 'Zum Foto gehört ein Alt-Text.',
+      path: ['alt'],
+    })
+    .refine((eintrag) => !('link' in eintrag && eintrag.link) || Boolean(eintrag.linkText?.trim()), {
+      message: 'Zum Link gehört ein Linktext.',
+      path: ['linkText'],
+    });
+}
+
+const karte = {
+  order: z.number(),
+  title: z.string().optional(),
+  link: z.string().optional(),
+  linkText: z.string().optional(),
+  bild: z.string().optional(),
+  alt: z.string().optional(),
+};
+
+const rundum = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/rundum' }),
+  schema: mitKarte(z.object(karte)),
+});
+
+const aktuelles = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/aktuelles' }),
+  schema: mitKarte(
+    z.object({
+      ...karte,
+      von: datum,
+      bis: datum,
+    }),
+  ),
+});
+
+export const collections = { seiten, termine, jahre, geschichte, ablauf, vorstand, videos, aktuelles, rundum };

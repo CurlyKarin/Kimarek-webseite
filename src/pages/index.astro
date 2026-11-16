@@ -1,39 +1,57 @@
 ---
-import { getCollection, getEntry, render } from 'astro:content';
+import { getCollection, getEntry, render, type CollectionEntry } from 'astro:content';
 import Countdown from '../components/Countdown.astro';
+import Seitenkopf from '../components/Seitenkopf.astro';
 import Base from '../layouts/Base.astro';
 import { verein } from '../config';
+import { bild } from '../lib/bilder';
 import { pfad } from '../lib/pfad';
+import { berlinHeute, imZeitraum } from '../lib/zeit';
 
 const start = await getEntry('seiten', 'start');
 if (!start) {
   throw new Error('Startseite fehlt');
 }
-const { Content } = await render(start);
 const termine = await getCollection('termine');
 const aktuell = termine.sort((a, b) => b.data.year - a.data.year)[0];
 const terminText = aktuell ? await render(aktuell) : null;
 const TerminInhalt = terminText?.Content;
+
+type Karte = CollectionEntry<'aktuelles'> | CollectionEntry<'rundum'>;
+
+async function karten<T extends Karte>(eintraege: T[]) {
+  return Promise.all(
+    eintraege.map(async (eintrag) => ({
+      eintrag,
+      Inhalt: eintrag.body?.trim() ? (await render(eintrag)).Content : null,
+    })),
+  );
+}
+
+const heute = berlinHeute();
+const meldungen = await karten(
+  (await getCollection('aktuelles'))
+    .filter((eintrag) => imZeitraum(eintrag.data.von, eintrag.data.bis, heute))
+    .sort((a, b) => a.data.order - b.data.order),
+);
+const hinweise = await karten(
+  (await getCollection('rundum')).sort((a, b) => a.data.order - b.data.order),
+);
+
+function adresse(link: string) {
+  return /^https?:\/\//.test(link) ? link : pfad(link);
+}
+
+function foto(src: string) {
+  return src.startsWith('/') ? pfad(src) : bild(src);
+}
 ---
 
 <Base title={verein.name} description={start.data.description}>
   <div class="wrap hero">
     <div>
-      <p class="kicker">{start.data.kicker}</p>
-      <h1>Eine Woche unter dem Chapiteau.</h1>
-      <div class="lead">
-        <Content />
-      </div>
+      <Seitenkopf seite={start} title={start.data.title} kicker={start.data.kicker} text />
       <Countdown saisons={termine.map((termin) => ({ year: termin.data.year, saisonEnde: termin.data.saisonEnde }))} />
-      <div class="actions">
-        {
-          aktuell && (
-            <a class="button" href={aktuell.data.portal}>
-              Zum Anmeldeportal
-            </a>
-          )
-        }
-      </div>
       <p class="remind">
         Nicht verpassen. Jedes Jahr am 1. Februar um 9 Uhr öffnet die Anmeldung.
         <a href={pfad('/anmeldung.ics')}>
@@ -47,80 +65,91 @@ const TerminInhalt = terminText?.Content;
     </div>
     {
       aktuell && (
-        <article class="ticket">
-          <header>
-            <h2>{aktuell.data.title}</h2>
-            <p>Anmeldung nur über das Portal.</p>
-          </header>
-          {aktuell.data.wochen.map((woche) => (
-            <div class="ticket-row">
-              <h3>{woche.name}</h3>
-              <div class="alter">{woche.alter}</div>
-              <p class="when">
-                Anreise {woche.anreise}
-                <br />
-                Abreise {woche.abreise}
-              </p>
-              <ul class="shows">
-                {woche.vorstellungen.map((show) => (
-                  <li>{show}</li>
-                ))}
-              </ul>
+        <div class="hero-neben">
+          <article class="ticket">
+            <header>
+              <h2>{aktuell.data.title}</h2>
+              <p>Anmeldung nur über das Portal.</p>
+            </header>
+            {aktuell.data.wochen.map((woche) => (
+              <div class="ticket-row">
+                <h3>{woche.name}</h3>
+                <div class="alter">{woche.alter}</div>
+                <p class="when">
+                  Anreise {woche.anreise}
+                  <br />
+                  Abreise {woche.abreise}
+                </p>
+                <ul class="shows">
+                  {woche.vorstellungen.map((show) => (
+                    <li>{show}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+            <div class="note">
+              {TerminInhalt && <TerminInhalt />}
             </div>
-          ))}
-          <div class="note">
-            {TerminInhalt && <TerminInhalt />}
-          </div>
-        </article>
+            <div class="actions">
+              <a class="button" href={aktuell.data.portal}>
+                Zum Anmeldeportal
+              </a>
+            </div>
+          </article>
+          <a class="facebook-card panel" href={verein.facebook}>
+            <img src={pfad('/media/facebook.png')} alt="" width="200" height="200" />
+            <span>
+              <strong>Kinderzirkus Kimarek</strong>
+              <span>{verein.facebookInfo}</span>
+            </span>
+          </a>
+        </div>
       )
     }
   </div>
 
   <section class="wrap band">
-    <h2>Was eine Kimarek-Woche ausmacht</h2>
+    {
+      meldungen.length > 0 && (
+        <>
+          <h2>Aktuelles</h2>
+          <div class="meldungen">
+            {meldungen.map(({ eintrag, Inhalt }) => (
+              <article class:list={[{ 'nur-bild': eintrag.data.bild && !eintrag.data.title && !Inhalt }]}>
+                {eintrag.data.bild && <img src={foto(eintrag.data.bild)} alt={eintrag.data.alt ?? ''} />}
+                {eintrag.data.title && <h3>{eintrag.data.title}</h3>}
+                {Inhalt && (
+                  <div class="karte-text">
+                    <Inhalt />
+                  </div>
+                )}
+                {eintrag.data.link && eintrag.data.linkText && (
+                  <a href={adresse(eintrag.data.link)}>{eintrag.data.linkText}</a>
+                )}
+              </article>
+            ))}
+          </div>
+        </>
+      )
+    }
+    <h2 class:list={[{ 'band-folge': meldungen.length > 0 }]}>Rund um Kimarek</h2>
     <div class="trio">
-      <article>
-        <h3>Die Manege</h3>
-        <p>
-          Jedes Kind sucht sich eine Artistengruppe aus: Geräteturnen, Bodenakrobatik, Jonglage, Feuerspucken und mehr.
-          Am Ende der Woche stehen Premiere und Gala.
-        </p>
-        <a href={pfad('/ablauf')}>Zum Ablauf</a>
-      </article>
-      <article>
-        <h3>Das Zeltlager</h3>
-        <p>
-          Geschlafen wird in Zeltgruppen, gekocht vom Küchenteam. Dazwischen gibt es Spiele, Disco, Lagerfeuer und das Kimarek-Burger-Essen.
-        </p>
-        <a href={pfad('/zelt')}>Das Chapiteau</a>
-      </article>
-      <article>
-        <h3>Das Team</h3>
-        <p>
-          Rund 30 Betreuende tragen eine Kinderwoche. Wer zwischen 17 und 35 ist und mitmachen will, schreibt an {verein.mail}.
-        </p>
-        <a href={pfad('/betreuer')}>Betreuer werden</a>
-      </article>
-    </div>
-    <div class="home-extra">
-      <figure class="sponsor">
-        <img
-          src={pfad('/media/zukunftsfonds.jpg')}
-          alt="Dieses Projekt wird gefördert durch die Stiftung Zukunftsfonds Asse"
-          width="880"
-          height="880"
-        />
-      </figure>
-      <article class="panel">
-        <h2>Auf Facebook</h2>
-        <a class="facebook-card" href={verein.facebook}>
-          <img src={pfad('/media/facebook.png')} alt="" width="200" height="200" />
-          <span>
-            <strong>Kinderzirkus Kimarek</strong>
-            <span>{verein.facebookInfo}</span>
-          </span>
-        </a>
-      </article>
+      {
+        hinweise.map(({ eintrag, Inhalt }) => (
+          <article class:list={[{ 'nur-bild': eintrag.data.bild && !eintrag.data.title && !Inhalt }]}>
+            {eintrag.data.bild && <img src={foto(eintrag.data.bild)} alt={eintrag.data.alt ?? ''} />}
+            {eintrag.data.title && <h3>{eintrag.data.title}</h3>}
+            {Inhalt && (
+              <div class="karte-text">
+                <Inhalt />
+              </div>
+            )}
+            {eintrag.data.link && eintrag.data.linkText && (
+              <a href={adresse(eintrag.data.link)}>{eintrag.data.linkText}</a>
+            )}
+          </article>
+        ))
+      }
     </div>
   </section>
 </Base>

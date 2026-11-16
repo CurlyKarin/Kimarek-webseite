@@ -1,5 +1,5 @@
 ---
-title: Kinderzirkus Kimarek
+title: Eine Woche unter dem Chapiteau.
 description: Zeltlager für Kinder und Jugendliche in den Sommerferien. Proben, Zeltleben und Vorstellung unter dem Chapiteau.
 kicker: Seit 1987
 ---

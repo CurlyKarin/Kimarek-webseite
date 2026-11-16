@@ -196,7 +196,7 @@ main .wrap {
 }
 
 .brand img {
-  height: 5.5rem;
+  height: 7.5rem;
   width: auto;
 }
 
@@ -1382,7 +1382,7 @@ body.page-open .story:not(.story-only) .story-text {
   }
 
   .brand img {
-    height: 4.4rem;
+    height: 6rem;
   }
 }
 

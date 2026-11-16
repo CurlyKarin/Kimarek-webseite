@@ -186,7 +186,7 @@ main .wrap {
   align-items: center;
   gap: 1rem;
   min-height: 5rem;
-  padding-block: 0.6rem;
+  padding-block: 0.25rem;
 }
 
 .brand {
@@ -1429,6 +1429,14 @@ body.page-open .story:not(.story-only) .story-text {
 @media (min-width: 861px) {
   .nav-toggle {
     display: none;
+  }
+
+  .header-bar {
+    padding-block: 0.1rem;
+  }
+
+  .brand img {
+    height: 6.25rem;
   }
 
   .hero {

@@ -51,5 +51,5 @@ Jahresfotos, Vorstands- und Teambilder kommen nicht in dieses Repository. Sie so
 
 1. Der Verein legt eine GitHub-Organisation an, kein persönliches Konto.
 2. Dieses Repository wird an die Organisation übertragen.
-3. Die Vorstandsleute werden Mitglieder und können die Markdown-Dateien ändern. Ein Redaktionssystem kommt als nächster Schritt dazu.
+3. Die Vorstandsleute werden Mitglieder und können die Markdown-Dateien ändern. Die Redaktion liegt unter `/admin` (Sveltia CMS). Lokal, bei laufendem `npm run dev`, öffnet man [http://127.0.0.1:4321/admin/index.html](http://127.0.0.1:4321/admin/index.html) und arbeitet am lokalen Repository. Die Anmeldung per GitHub kommt dazu, sobald der Verein die Organisation und die kleine Anmeldehilfe auf Cloudflare hat. Fotos lädt die Redaktion nicht hoch, sie trägt nur den Pfad im Bilderspeicher ein.
 4. Erst danach wird `www.kimarek.de` per DNS und `CNAME` auf das neue Repository gelegt. Gleichzeitig `vorschau` in `src/config.ts` auf `false` setzen.

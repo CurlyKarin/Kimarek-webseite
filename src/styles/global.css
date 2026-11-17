@@ -14,6 +14,7 @@
   --font-display: 'Fredoka', 'Arial Rounded MT Bold', sans-serif;
   --font-body: 'Source Sans 3', 'Segoe UI', sans-serif;
   --wrap: 72rem;
+  --radius: 0.35rem;
   color-scheme: light;
 }
 
@@ -63,6 +64,7 @@ body.page-open .page-head,
 body.page-open .story-text,
 body.page-open .team-copy {
   background: rgba(255, 253, 250, 0.9);
+  border-radius: var(--radius);
 }
 
 body.page-open .page-head {
@@ -99,6 +101,7 @@ body.page-open .team-copy {
 
 .week-copy {
   background: rgba(255, 253, 250, 0.9);
+  border-radius: var(--radius);
   padding: 1rem 1.15rem 0.35rem;
 }
 
@@ -159,7 +162,7 @@ a:hover {
 
 main .wrap {
   background: rgba(255, 253, 250, 0.94);
-  border-radius: 0;
+  border-radius: var(--radius);
   padding: 0 1.25rem 1.85rem;
   margin-block: 1.15rem;
 }
@@ -206,7 +209,7 @@ main .wrap {
   background: var(--yellow);
   color: var(--ink);
   border: 2px solid var(--ink);
-  border-radius: 0;
+  border-radius: var(--radius);
   padding: 0.35rem 0.9rem;
   cursor: pointer;
 }
@@ -230,7 +233,7 @@ main .wrap {
   list-style: none;
   cursor: pointer;
   padding: 0.35rem 0.7rem;
-  border-radius: 0;
+  border-radius: var(--radius);
 }
 
 .nav-drop summary::after {
@@ -262,14 +265,14 @@ main .wrap {
   min-width: 12rem;
   background: var(--blue);
   border: 0;
-  border-radius: 0;
+  border-radius: var(--radius);
   box-shadow: none;
 }
 
 .nav-drop a {
   display: block;
   padding: 0.4rem 0.7rem;
-  border-radius: 0;
+  border-radius: var(--radius);
   color: white;
   text-decoration: none;
 }
@@ -286,7 +289,7 @@ main .wrap {
   background: var(--red);
   color: white;
   padding: 0.45rem 0.9rem;
-  border-radius: 0;
+  border-radius: var(--radius);
   margin-left: 0.4rem;
 }
 
@@ -327,6 +330,7 @@ body.page-open .band > h2 {
   display: inline-block;
   margin-bottom: 0.9rem;
   background: rgba(255, 253, 250, 0.9);
+  border-radius: var(--radius);
   padding: 0.35rem 0.7rem;
 }
 
@@ -370,6 +374,7 @@ h1 {
   margin-top: 0.9rem;
   background: var(--blue);
   color: var(--orange);
+  border-radius: var(--radius);
   padding: 0.85rem 1rem 0.95rem;
 }
 
@@ -505,7 +510,7 @@ h1 {
   align-items: center;
   text-decoration: none;
   font-family: var(--font-display);
-  border-radius: 0;
+  border-radius: var(--radius);
   padding: 0.7rem 1.1rem;
   background: var(--red);
   color: white;
@@ -543,7 +548,7 @@ h1 {
 
 .ticket {
   background: var(--sheet);
-  border-radius: 0;
+  border-radius: var(--radius);
   box-shadow: var(--shadow);
   border: 1px solid var(--line);
   overflow: hidden;
@@ -618,7 +623,8 @@ h1 {
 .panel {
   background: var(--sheet);
   border: 1px solid var(--line);
-  border-radius: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
   padding: 1.1rem 1.2rem 1.2rem;
 }
 
@@ -655,6 +661,8 @@ h1 {
   display: block;
   background: white;
   border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
 .foerderung-bild:hover {
@@ -824,7 +832,7 @@ h1 {
   color: var(--ink);
   background: var(--sheet);
   border: 1px solid var(--line);
-  border-radius: 0;
+  border-radius: var(--radius);
   overflow: hidden;
 }
 
@@ -907,7 +915,7 @@ main .wrap.galerie-inhalt {
 .album {
   background: var(--sheet);
   border: 1px solid var(--line);
-  border-radius: 0;
+  border-radius: var(--radius);
   padding: 1rem 1.1rem 1.15rem;
   margin: 0 0 0.8rem;
   scroll-margin-top: 8rem;
@@ -1131,6 +1139,8 @@ main .wrap.galerie-inhalt {
   padding: 0.85rem;
   background: #fff;
   border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 
 body.page-open .story:not(.story-only) {
@@ -1259,7 +1269,7 @@ body.page-open .story:not(.story-only) .story-text {
 .sponsor {
   margin: 0;
   background: white;
-  border-radius: 0;
+  border-radius: var(--radius);
   padding: 0.4rem 0.8rem;
 }
 

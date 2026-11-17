@@ -35,7 +35,7 @@ Sie haben im Rahmen der gesetzlichen Bestimmungen jederzeit das Recht auf unentg
 
 ## Hosting und Betrieb
 
-Diese Website ist ein statisches Angebot. Es gibt kein Kontaktformular und kein eigenes Analysewerkzeug. Schriften werden vom Server dieser Website ausgeliefert, nicht von Google Fonts. Ein Facebook-Plugin ist nicht eingebunden. Ein Link zu Facebook oder zum Anmeldeportal baut erst dann eine Verbindung auf, wenn Sie ihn öffnen.
+Diese Website ist ein statisches Angebot. Es gibt kein Kontaktformular und kein eigenes Analysewerkzeug. Schriften werden vom Server dieser Website ausgeliefert, nicht von Google Fonts. Ein Facebook-Plugin ist nicht eingebunden. Ein Link zu Facebook, Instagram oder zum Anmeldeportal baut erst dann eine Verbindung auf, wenn Sie ihn öffnen.
 
 ### YouTube
 

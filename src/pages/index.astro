@@ -1,6 +1,7 @@
 ---
 import { getCollection, getEntry, render, type CollectionEntry } from 'astro:content';
 import Countdown from '../components/Countdown.astro';
+import NetzwerkMarke from '../components/NetzwerkMarke.astro';
 import Seitenkopf from '../components/Seitenkopf.astro';
 import Base from '../layouts/Base.astro';
 import { verein } from '../config';
@@ -118,18 +119,7 @@ function foto(src: string) {
                 {eintrag.data.bild && <img src={foto(eintrag.data.bild)} alt={eintrag.data.alt ?? ''} width="200" height="200" />}
                 <div>
                   <span class="sozial-netz">
-                    {
-                      eintrag.data.netzwerk === 'Facebook' && (
-                        <svg class="sozial-marke" viewBox="0 0 24 24" aria-hidden="true">
-                          <rect width="24" height="24" rx="5" fill="#0866FF" />
-                          <path
-                            fill="#fff"
-                            transform="translate(3.4 2.6) scale(0.72)"
-                            d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 8.77 8.77 0 0 0-.733-.014c-.707 0-1.259.264-1.63.748-.37.485-.555 1.173-.555 2.063v1.174h3.523l-.612 3.667h-2.911v8.008h-4.896z"
-                          />
-                        </svg>
-                      )
-                    }
+                    <NetzwerkMarke name={eintrag.data.netzwerk} />
                     {eintrag.data.netzwerk}
                   </span>
                   <strong>{eintrag.data.title}</strong>

@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
+import NetzwerkMarke from './NetzwerkMarke.astro';
 import { verein } from '../config';
+import { istNetzwerkName } from '../lib/netzwerke';
 import { pfad } from '../lib/pfad';
 
 interface Props {
@@ -17,9 +19,15 @@ const netzwerke = (await getCollection('netzwerke')).sort((a, b) => a.data.order
     <p class="fine">© {year} {verein.name}</p>
     <nav class="footer-links" aria-label="Service">
       {portal && <a href={portal}>Anmeldeportal</a>}
-      {netzwerke.map((eintrag) => (
-        <a href={eintrag.data.link}>{eintrag.data.netzwerk}</a>
-      ))}
+      {netzwerke.map((eintrag) =>
+        istNetzwerkName(eintrag.data.netzwerk) ? (
+          <a class="footer-netz" href={eintrag.data.link} aria-label={eintrag.data.netzwerk}>
+            <NetzwerkMarke name={eintrag.data.netzwerk} ton="einfarbig" />
+          </a>
+        ) : (
+          <a href={eintrag.data.link}>{eintrag.data.netzwerk}</a>
+        ),
+      )}
       <a href={pfad('/kontakt')}>Kontakt</a>
       <a href={pfad('/datenschutz')}>Datenschutz</a>
       <a href={pfad('/impressum')}>Impressum</a>

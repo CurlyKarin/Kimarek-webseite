@@ -1350,7 +1350,19 @@ body.page-open .story:not(.story-only) .story-text {
 .footer-links {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   margin: 0 -0.5rem -0.4rem;
+}
+
+.footer-netz {
+  display: inline-flex;
+  align-items: center;
+}
+
+.footer-netz .sozial-marke {
+  width: 1.45rem;
+  height: 1.45rem;
+  margin-right: 0;
 }
 
 .footer-links a {

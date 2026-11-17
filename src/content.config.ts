@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { netzwerkNamen } from './lib/netzwerke';
 
 const seiten = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/seiten' }),
@@ -161,7 +162,7 @@ const netzwerke = defineCollection({
     .object({
       order: z.number(),
       title: z.string(),
-      netzwerk: z.string(),
+      netzwerk: z.enum(netzwerkNamen),
       link: z.string().url(),
       bild: z.string().optional(),
       alt: z.string().optional(),

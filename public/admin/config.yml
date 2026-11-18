@@ -164,7 +164,7 @@ collections:
         name: bild
         widget: string
         required: false
-        hint: Pfad im Bilderspeicher, zum Beispiel geschichte/web/001.jpg. Dateien lädt diese Redaktion nicht hoch.
+        hint: Pfad im Bilderspeicher, zum Beispiel geschichte/001.jpg. Dateien lädt diese Redaktion nicht hoch.
       - &alt
         label: Alt-Text
         name: alt

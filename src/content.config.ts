@@ -9,6 +9,8 @@ const seiten = defineCollection({
     liste: z.string().optional(),
     title: z.string(),
     description: z.string(),
+    // Ein Bild für die Linkvorschau. Leer: das Foto der Startseite.
+    teilenBild: z.string().optional(),
     kicker: z.string().optional(),
     // Ordner im Bilderspeicher, oder der Pfad eines einzelnen Bildes.
     fotosOben: z.string().optional(),

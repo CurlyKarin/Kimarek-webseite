@@ -43,7 +43,15 @@ collections:
         name: title
         widget: string
         hint: Die Überschrift auf der Seite.
-      - { label: Kurzbeschreibung, name: description, widget: text }
+      - label: Kurzbeschreibung
+        name: description
+        widget: text
+        hint: Erscheint in der Trefferliste und wenn jemand den Link weitergibt.
+      - label: Foto beim Weitergeben
+        name: teilenBild
+        widget: string
+        required: false
+        hint: Ein Bild für die Vorschau des Links, zum Beispiel hintergruende/one.JPG. Auf den anderen Seiten leer lassen, dann gilt das Foto der Startseite.
       - label: Kleine Zeile über der Überschrift
         name: kicker
         widget: string

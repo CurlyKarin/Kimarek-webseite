@@ -27,7 +27,7 @@ const bezeichnung = seite.data.fotosBezeichnung?.trim() || seite.data.title;
 const hatLicht = fotos.length > 0 || collage.length > 0;
 ---
 
-<Base title={seite.data.title} description={seite.data.description} hintergrund={hintergrund}>
+<Base title={seite.data.title} description={seite.data.description} hintergrund={hintergrund} teilenBild={seite.data.teilenBild}>
   <article class="wrap feature">
     <Seitenkopf seite={seite} title={seite.data.title} kicker={seite.data.kicker} text />
     {fotos.length > 0 && <Fotoreihe label={bezeichnung} fotos={fotos.map((src) => ({ src, alt: '' }))} />}

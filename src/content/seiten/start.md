@@ -2,6 +2,7 @@
 liste: Startseite
 title: Eine Woche unter dem Chapiteau.
 description: Zeltlager für Kinder und Jugendliche in den Sommerferien. Proben, Zeltleben und Vorstellung unter dem Chapiteau.
+teilenBild: hintergruende/one.JPG
 kicker: Seit 1987
 ---
 

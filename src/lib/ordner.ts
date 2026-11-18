@@ -10,13 +10,13 @@ const bildDatei = /\.(jpe?g|png|webp|gif)$/i;
 
 /** Bekannte Dateinamen, solange der Bilderspeicher keine Ordnerliste herausgibt. */
 const bekannt: Record<string, string[]> = {
-  'betreuer/wechsel': betreuer.wechsel,
-  betreuer: betreuer.collage,
-  zelt: zelt.collage,
-  kinder: kinder.collage,
-  jugend: jugend.collage,
-  'gruppenfotos/kinderwoche': gruppenfotos.kinderwoche,
-  'gruppenfotos/jugendwoche': gruppenfotos.jugendwoche,
+  'betreuer/titelfotos': betreuer.wechsel,
+  'betreuer/collage': betreuer.collage,
+  'zelt/collage': zelt.collage,
+  'kinderwoche/collage': kinder.collage,
+  'jugendwoche/collage': jugend.collage,
+  'kinderwoche/titelfotos': gruppenfotos.kinderwoche,
+  'jugendwoche/titelfotos': gruppenfotos.jugendwoche,
 };
 
 let listeGeht: boolean | null = null;

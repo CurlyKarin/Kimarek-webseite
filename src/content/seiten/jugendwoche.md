@@ -2,8 +2,8 @@
 title: Jugendwoche
 description: Eine Zirkuswoche für etwa 30 Jugendliche von 12 bis 16 Jahren.
 kicker: Freizeiten
-fotosOben: gruppenfotos/jugendwoche
+fotosOben: jugendwoche/titelfotos
 fotosBezeichnung: Gruppenfotos der Jugendwochen
-collage: jugend
+collage: jugendwoche/collage
 hintergrund: hintergruende/two.JPG
 ---

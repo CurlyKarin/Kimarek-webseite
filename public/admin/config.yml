@@ -52,7 +52,7 @@ collections:
         name: fotosOben
         widget: string
         required: false
-        hint: Ordner im Bilderspeicher, zum Beispiel gruppenfotos/kinderwoche. Der Pfad eines einzelnen Bildes bleibt stehen. Leer lassen, wenn keine Titelfotos da sind.
+        hint: Ordner im Bilderspeicher, zum Beispiel kinderwoche/titelfotos. Der Pfad eines einzelnen Bildes bleibt stehen. Leer lassen, wenn keine Titelfotos da sind.
       - label: Bezeichnung der Titelfotos
         name: fotosBezeichnung
         widget: string
@@ -62,7 +62,7 @@ collections:
         name: collage
         widget: string
         required: false
-        hint: Ordner im Bilderspeicher. Die Fotos stehen unten ohne Überschrift. Leer lassen, wenn keine Collage da ist.
+        hint: Ordner im Bilderspeicher, zum Beispiel kinderwoche/collage. Die Fotos stehen unten ohne Überschrift. Leer lassen, wenn keine Collage da ist.
       - label: Hintergrund
         name: hintergrund
         widget: string
@@ -164,7 +164,7 @@ collections:
         name: bild
         widget: string
         required: false
-        hint: Pfad im Bilderspeicher, zum Beispiel geschichte/001.jpg. Dateien lädt diese Redaktion nicht hoch.
+        hint: Pfad im Bilderspeicher, zum Beispiel geschichte/abschnitte/001.jpg. Dateien lädt diese Redaktion nicht hoch.
       - &alt
         label: Alt-Text
         name: alt

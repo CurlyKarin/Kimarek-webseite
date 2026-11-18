@@ -36,7 +36,7 @@ Alles, was der Vorstand später pflegen soll, liegt als Markdown unter `src/cont
 | Ordner | Inhalt |
 | --- | --- |
 | `termine` | Jahreszahlen, Wochen, Link zum Anmeldeportal und `saisonEnde`, der letzte Ferientag. Die Anmeldung startet immer am 1. Februar um 9 Uhr; der Countdown läuft bis dahin und beginnt erst nach `saisonEnde` neu. Solange die Anmeldung offen ist, steht das anstelle der Zahlen. |
-| `seiten` | Titel, Kurzbeschreibung, die kleine Zeile über der Überschrift, dazu Ordner für Titelfotos, Collage und Hintergrund |
+| `seiten` | Name in der Liste (nur die Startseite, sonst der Titel), Titel, Kurzbeschreibung, die kleine Zeile über der Überschrift, dazu Ordner für Titelfotos, Collage und Hintergrund |
 | `abschnitte` | Texte und Fotos der Inhaltsseiten, jeweils mit der Seite, zu der sie gehören |
 | `jahre` | Galerie-Jahre und die Anzahl der vorhandenen Fotos |
 | `videos` | YouTube-Filme |

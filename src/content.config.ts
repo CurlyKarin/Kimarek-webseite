@@ -5,6 +5,8 @@ import { netzwerkNamen } from './lib/netzwerke';
 const seiten = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/seiten' }),
   schema: z.object({
+    // Nur der Name in der Redaktionsliste. Die Überschrift bleibt title.
+    liste: z.string().optional(),
     title: z.string(),
     description: z.string(),
     kicker: z.string().optional(),

@@ -31,10 +31,18 @@ collections:
     format: frontmatter
     create: false
     delete: false
-    identifier_field: title
-    summary: "{{title}}"
+    identifier_field: liste
+    summary: "{{liste | default('{{title}}')}}"
     fields:
-      - { label: Titel, name: title, widget: string }
+      - label: Name in der Liste
+        name: liste
+        widget: string
+        required: false
+        hint: Nur für diese Übersicht. Leer lassen, dann gilt der Titel. Bei der Startseite steht hier Startseite, der Titel bleibt die Überschrift auf der Seite.
+      - label: Titel
+        name: title
+        widget: string
+        hint: Die Überschrift auf der Seite.
       - { label: Kurzbeschreibung, name: description, widget: text }
       - label: Kleine Zeile über der Überschrift
         name: kicker

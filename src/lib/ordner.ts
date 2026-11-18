@@ -12,7 +12,7 @@ const bildDatei = /\.(jpe?g|png|webp|gif)$/i;
 const bekannt: Record<string, string[]> = {
   'betreuer/wechsel': betreuer.wechsel,
   betreuer: betreuer.collage,
-  'zelt/web': zelt.collage,
+  zelt: zelt.collage,
   kinder: kinder.collage,
   jugend: jugend.collage,
   'gruppenfotos/kinderwoche': gruppenfotos.kinderwoche,
@@ -28,7 +28,7 @@ function sauber(angabe: string) {
 async function speicherListet() {
   if (listeGeht !== null) return listeGeht;
   try {
-    const antwort = await fetch(`${bilderBasis}/?list-type=2&prefix=zelt/web/&max-keys=1`);
+    const antwort = await fetch(`${bilderBasis}/?list-type=2&prefix=zelt/&max-keys=1`);
     const text = await antwort.text();
     listeGeht = antwort.ok && text.includes('<Key>');
   } catch {

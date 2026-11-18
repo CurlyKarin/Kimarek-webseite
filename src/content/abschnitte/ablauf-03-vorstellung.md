@@ -1,6 +1,7 @@
 ---
+seite: ablauf
 order: 3
-bild: ablauf/IMG_6133.JPG
+bild: ablauf/abschnitte/IMG_6133.JPG
 alt: Kinder bilden eine Pyramide auf der Bühne vor dem Kimarek-Vorhang
 zuerst: text
 ---

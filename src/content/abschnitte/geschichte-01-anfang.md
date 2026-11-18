@@ -1,6 +1,7 @@
 ---
+seite: geschichte
 order: 1
-bild: geschichte/web/001.jpg
+bild: geschichte/abschnitte/001.jpg
 alt: Zirkuszelt auf einer Wiese, davor ein Bauwagen und das Kimarek-Schild
 zuerst: text
 ---

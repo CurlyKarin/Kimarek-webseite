@@ -5,9 +5,18 @@ import { netzwerkNamen } from './lib/netzwerke';
 const seiten = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/seiten' }),
   schema: z.object({
+    // Nur der Name in der Redaktionsliste. Die Überschrift bleibt title.
+    liste: z.string().optional(),
     title: z.string(),
     description: z.string(),
+    // Ein Bild für die Linkvorschau. Leer: das Foto der Startseite.
+    teilenBild: z.string().optional(),
     kicker: z.string().optional(),
+    // Ordner im Bilderspeicher, oder der Pfad eines einzelnen Bildes.
+    fotosOben: z.string().optional(),
+    fotosBezeichnung: z.string().optional(),
+    collage: z.string().optional(),
+    hintergrund: z.string().optional(),
   }),
 });
 
@@ -49,10 +58,10 @@ const jahre = defineCollection({
   }),
 });
 
-// Ein Abschnitt ist ein Block: nur Text, Text dann Foto, oder Foto dann Text.
-// Mit Foto ist der Textkasten so hoch wie das Bild. Das CMS pflegt später genau diese Liste.
+// Ein Abschnitt gehört zu einer Seite: nur Text, Text dann Foto, oder Foto dann Text.
 const abschnitt = z
   .object({
+    seite: z.string().min(1),
     order: z.number(),
     bild: z.string().optional(),
     alt: z.string().optional(),
@@ -63,18 +72,8 @@ const abschnitt = z
     path: ['alt'],
   });
 
-const geschichte = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/geschichte' }),
-  schema: abschnitt,
-});
-
-const ablauf = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/ablauf' }),
-  schema: abschnitt,
-});
-
-const vorstand = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/vorstand' }),
+const abschnitte = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/abschnitte' }),
   schema: abschnitt,
 });
 
@@ -84,6 +83,7 @@ const videos = defineCollection({
     title: z.string(),
     youtubeId: z.string().regex(/^[a-zA-Z0-9_-]{6,}$/),
     order: z.number(),
+    seiten: z.array(z.string().min(1)).min(1),
   }),
 });
 
@@ -177,9 +177,7 @@ export const collections = {
   seiten,
   termine,
   jahre,
-  geschichte,
-  ablauf,
-  vorstand,
+  abschnitte,
   videos,
   aktuelles,
   rundum,

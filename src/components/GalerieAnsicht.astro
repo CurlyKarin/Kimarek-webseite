@@ -28,6 +28,7 @@ const istUebersicht = pfadName.endsWith('/galerie');
   title={istUebersicht ? seite.data.title : String(aktiv.data.year)}
   description={seite.data.description}
   hintergrund={pfad('/media/zelt.jpg')}
+  teilenBild={seite.data.teilenBild}
 >
   <article class="wrap">
     <Seitenkopf seite={seite} title={seite.data.title} kicker={seite.data.kicker} text />

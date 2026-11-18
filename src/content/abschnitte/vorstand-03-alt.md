@@ -1,6 +1,7 @@
 ---
+seite: vorstand
 order: 3
-bild: vorstand/vorstand-alt.JPG
+bild: vorstand/abschnitte/vorstand-alt.JPG
 alt: Der frühere Vorstand, fünf Personen in Team-Shirts vor einer weißen Wand
 zuerst: text
 ---

@@ -3,10 +3,11 @@ import '@fontsource/fredoka/latin-400.css';
 import '@fontsource/fredoka/500.css';
 import '@fontsource/source-sans-3/400.css';
 import '@fontsource/source-sans-3/600.css';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { verein, vorschau } from '../config';
+import { bild } from '../lib/bilder';
 import { pfad } from '../lib/pfad';
 import '../styles/global.css';
 
@@ -14,13 +15,22 @@ interface Props {
   title: string;
   description: string;
   hintergrund?: string;
+  teilenBild?: string;
 }
 
-const { title, description, hintergrund } = Astro.props;
+const { title, description, hintergrund, teilenBild } = Astro.props;
 const termine = await getCollection('termine');
 const aktuell = termine.sort((a, b) => b.data.year - a.data.year)[0];
 const portal = aktuell?.data.portal;
 const documentTitle = title === verein.name ? title : `${title} · ${verein.name}`;
+const start = await getEntry('seiten', 'start');
+const bildAngabe = teilenBild?.trim() || start?.data.teilenBild?.trim() || '';
+const teilenUrl = bildAngabe
+  ? bildAngabe.startsWith('/')
+    ? new URL(pfad(bildAngabe), Astro.site).href
+    : bild(bildAngabe)
+  : undefined;
+const seitenAdresse = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <!doctype html>
@@ -29,6 +39,18 @@ const documentTitle = title === verein.name ? title : `${title} · ${verein.name
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta property="og:title" content={documentTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content={verein.name} />
+    <meta property="og:url" content={seitenAdresse} />
+    {teilenUrl && <meta property="og:image" content={teilenUrl} />}
+    {teilenUrl && <meta property="og:image:alt" content={documentTitle} />}
+    <meta name="twitter:card" content={teilenUrl ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={documentTitle} />
+    <meta name="twitter:description" content={description} />
+    {teilenUrl && <meta name="twitter:image" content={teilenUrl} />}
     {vorschau && <meta name="robots" content="noindex, nofollow" />}
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" href={pfad('/favicon.ico')} />

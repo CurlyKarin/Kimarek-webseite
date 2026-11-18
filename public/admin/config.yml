@@ -1,0 +1,374 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms@0.267.0/schema/sveltia-cms.json
+#
+# Redaktion für die Markdown-Dateien unter src/content.
+# Fotos bleiben im Bilderspeicher. Hier stehen nur Pfade, kein Upload.
+
+backend:
+  name: github
+  repo: CurlyKarin/Kimarek-webseite
+  branch: main
+
+locale: de
+site_url: https://curlykarin.github.io/Kimarek-webseite
+display_url: https://curlykarin.github.io/Kimarek-webseite
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+# Pflichtangabe der Redaktion. Galerie- und Kinderfotos gehören hier nicht hinein.
+# Dafür bleibt es beim Bildpfad in den Einträgen.
+media_folder: public/media
+public_folder: /media
+
+collections:
+  - name: seiten
+    label: Seiten
+    label_singular: Seite
+    description: Feste Seiten. Neue Seiten legt die Redaktion nicht an, die Texte schon.
+    folder: src/content/seiten
+    extension: md
+    format: frontmatter
+    create: false
+    delete: false
+    identifier_field: liste
+    summary: "{{liste | default('{{title}}')}}"
+    fields:
+      - label: Name in der Liste
+        name: liste
+        widget: string
+        required: false
+        hint: Nur für diese Übersicht. Leer lassen, dann gilt der Titel. Bei der Startseite steht hier Startseite, der Titel bleibt die Überschrift auf der Seite.
+      - label: Titel
+        name: title
+        widget: string
+        hint: Die Überschrift auf der Seite.
+      - label: Kurzbeschreibung
+        name: description
+        widget: text
+        hint: Erscheint in der Trefferliste und wenn jemand den Link weitergibt.
+      - label: Foto beim Weitergeben
+        name: teilenBild
+        widget: string
+        required: false
+        hint: Ein Bild für die Vorschau des Links, zum Beispiel hintergruende/one.JPG. Auf den anderen Seiten leer lassen, dann gilt das Foto der Startseite.
+      - label: Kleine Zeile über der Überschrift
+        name: kicker
+        widget: string
+        required: false
+      - label: Titelfotos
+        name: fotosOben
+        widget: string
+        required: false
+        hint: Ordner im Bilderspeicher, zum Beispiel kinderwoche/titelfotos. Der Pfad eines einzelnen Bildes bleibt stehen. Leer lassen, wenn keine Titelfotos da sind.
+      - label: Bezeichnung der Titelfotos
+        name: fotosBezeichnung
+        widget: string
+        required: false
+        hint: Nur für die Vorlese-Software. Fehlt sie, gilt der Seitentitel.
+      - label: Collage
+        name: collage
+        widget: string
+        required: false
+        hint: Ordner im Bilderspeicher, zum Beispiel kinderwoche/collage. Die Fotos stehen unten ohne Überschrift. Leer lassen, wenn keine Collage da ist.
+      - label: Hintergrund
+        name: hintergrund
+        widget: string
+        required: false
+        hint: Pfad eines Hintergrundfotos, zum Beispiel hintergruende/chappi.JPG. Leer lassen für die helle Fläche.
+      - &text
+        label: Text
+        name: body
+        widget: markdown
+        required: false
+
+  - name: termine
+    label: Termine
+    label_singular: Jahr
+    description: Ein Eintrag pro Saison. Die Anmeldung bleibt der 1. Februar, 9 Uhr.
+    folder: src/content/termine
+    extension: md
+    format: frontmatter
+    create: true
+    delete: true
+    identifier_field: title
+    slug: "{{year}}"
+    summary: "{{year}}"
+    sortable_fields: [year]
+    fields:
+      - { label: Titel, name: title, widget: string }
+      - label: Jahr
+        name: year
+        widget: number
+        value_type: int
+        min: 1987
+        step: 1
+      - label: Anmeldeportal
+        name: portal
+        widget: string
+      - label: Letzter Ferientag
+        name: saisonEnde
+        widget: string
+        pattern: ['^\d{4}-\d{2}-\d{2}$', "Datum als JJJJ-MM-TT"]
+        hint: Danach darf der Countdown für das nächste Jahr neu beginnen.
+      - label: Kalendererinnerung
+        name: kalendererinnerung
+        widget: boolean
+        default: true
+        required: false
+      - label: Wochen
+        name: wochen
+        widget: list
+        summary: "{{fields.name}}"
+        fields:
+          - { label: Name, name: name, widget: string }
+          - { label: Alter, name: alter, widget: string }
+          - { label: Anreise, name: anreise, widget: string }
+          - { label: Abreise, name: abreise, widget: string }
+          - label: Vorstellungen
+            name: vorstellungen
+            widget: list
+            field: { label: Vorstellung, name: vorstellung, widget: string }
+      - *text
+
+  - name: abschnitte
+    label: Abschnitte
+    label_singular: Abschnitt
+    description: Text, Text und Foto, oder Foto und Text. Gehört zu einer Seite und steht unter den Titelfotos.
+    folder: src/content/abschnitte
+    extension: md
+    format: frontmatter
+    create: true
+    delete: true
+    slug: "{{seite}}-{{order}}"
+    summary: "{{seite}}"
+    sortable_fields: [order, seite]
+    fields: &abschnitt
+      - &seite
+        label: Seite
+        name: seite
+        widget: select
+        options: &seitenwahl
+          - { label: Betreuer, value: betreuer }
+          - { label: Das Zelt, value: zelt }
+          - { label: Kinderwoche, value: kinderwoche }
+          - { label: Jugendwoche, value: jugendwoche }
+          - { label: Ablauf, value: ablauf }
+          - { label: Vorstand, value: vorstand }
+          - { label: Seit 1987, value: geschichte }
+          - { label: Videos, value: videos }
+          - { label: Kontakt, value: kontakt }
+          - { label: Impressum, value: impressum }
+          - { label: Datenschutz, value: datenschutz }
+      - &order
+        label: Reihenfolge
+        name: order
+        widget: number
+        value_type: int
+        min: 1
+        step: 1
+      - &bild
+        label: Bildpfad
+        name: bild
+        widget: string
+        required: false
+        hint: Pfad im Bilderspeicher, zum Beispiel geschichte/abschnitte/001.jpg. Dateien lädt diese Redaktion nicht hoch.
+      - &alt
+        label: Alt-Text
+        name: alt
+        widget: string
+        required: false
+        hint: Was auf dem Bild zu sehen ist. Pflicht, sobald ein Bildpfad steht.
+      - &zuerst
+        label: Was zuerst kommt
+        name: zuerst
+        widget: select
+        default: text
+        options:
+          - { label: Text, value: text }
+          - { label: Foto, value: bild }
+      - *text
+
+  - name: videos
+    label: Videos
+    label_singular: Video
+    description: Nur die YouTube-Kennung. Der Film startet erst beim Abspielen und steht auf den gewählten Seiten unter den Abschnitten.
+    folder: src/content/videos
+    extension: md
+    format: frontmatter
+    create: true
+    delete: true
+    identifier_field: title
+    slug: "{{title}}"
+    summary: "{{title}}"
+    sortable_fields: [order]
+    fields:
+      - { label: Titel, name: title, widget: string }
+      - label: YouTube-Kennung
+        name: youtubeId
+        widget: string
+        pattern: ['^[a-zA-Z0-9_-]{6,}$', "Nur die Kennung, nicht die ganze Adresse"]
+        hint: Der Teil nach v=, zum Beispiel v9ecjMnAynw.
+      - label: Seiten
+        name: seiten
+        widget: select
+        multiple: true
+        min: 1
+        options: *seitenwahl
+      - *order
+
+  - name: aktuelles
+    label: Aktuelles
+    label_singular: Meldung
+    description: Ohne Bis-Datum bleibt die Meldung stehen. Mit Bis-Datum verschwindet sie beim nächsten Bau der Seite.
+    folder: src/content/aktuelles
+    extension: md
+    format: frontmatter
+    create: true
+    delete: true
+    identifier_field: title
+    slug: "{{order}}"
+    summary: "{{title}}"
+    sortable_fields: [order]
+    fields:
+      - *order
+      - &titel
+        label: Titel
+        name: title
+        widget: string
+        required: false
+      - label: Sichtbar ab
+        name: von
+        widget: string
+        required: false
+        pattern: ['^(\d{4}-\d{2}-\d{2})?$', "Datum als JJJJ-MM-TT oder leer"]
+      - label: Sichtbar bis
+        name: bis
+        widget: string
+        required: false
+        pattern: ['^(\d{4}-\d{2}-\d{2})?$', "Datum als JJJJ-MM-TT oder leer"]
+      - &link
+        label: Link
+        name: link
+        widget: string
+        required: false
+        hint: Adresse, intern mit /seite oder extern mit https://
+      - &linktext
+        label: Linktext
+        name: linkText
+        widget: string
+        required: false
+      - *bild
+      - *alt
+      - *text
+
+  - name: rundum
+    label: Rund um Kimarek
+    label_singular: Karte
+    folder: src/content/rundum
+    extension: md
+    format: frontmatter
+    create: true
+    delete: true
+    identifier_field: title
+    slug: "{{order}}"
+    summary: "{{title}}"
+    sortable_fields: [order]
+    fields:
+      - *order
+      - *titel
+      - *link
+      - *linktext
+      - *bild
+      - *alt
+      - *text
+
+  - name: foerderung
+    label: Förderung
+    label_singular: Förderung
+    description: Bild, Titel, Text und Link sind alle frei. Die Grafik kann selbst der Link sein.
+    folder: src/content/foerderung
+    extension: md
+    format: frontmatter
+    create: true
+    delete: true
+    slug: "{{order}}"
+    summary: "{{title}}"
+    sortable_fields: [order]
+    fields:
+      - *order
+      - *titel
+      - *link
+      - *linktext
+      - *bild
+      - *alt
+      - label: Grafik ist der Link
+        name: bildLink
+        widget: boolean
+        default: false
+        required: false
+      - *text
+
+  - name: netzwerke
+    label: Netzwerke
+    label_singular: Netzwerk
+    description: Name aus der Liste wählen und die Adresse eintragen. Das Zeichen liefert die Seite.
+    folder: src/content/netzwerke
+    extension: md
+    format: frontmatter
+    create: true
+    delete: true
+    identifier_field: title
+    slug: "{{order}}"
+    summary: "{{netzwerk}}"
+    sortable_fields: [order]
+    fields:
+      - *order
+      - { label: Titel, name: title, widget: string }
+      - label: Netzwerk
+        name: netzwerk
+        widget: select
+        options: [Facebook, Instagram, YouTube]
+      - { label: Adresse, name: link, widget: string }
+      - *bild
+      - *alt
+      - *text
+
+  - name: jahre
+    label: Galerie-Jahre
+    label_singular: Jahr
+    description: Name auf der Seite und Anzahl der Fotos. Der Ordner im Bilderspeicher kommt als Nächstes dazu, die Dateinamen tippt dann niemand mehr ab.
+    folder: src/content/jahre
+    extension: md
+    format: frontmatter
+    create: true
+    delete: true
+    identifier_field: title
+    slug: "{{year}}"
+    summary: "{{year}}"
+    sortable_fields: [year]
+    fields:
+      - { label: Titel, name: title, widget: string }
+      - label: Jahr
+        name: year
+        widget: number
+        value_type: int
+        min: 1987
+        step: 1
+      - label: Cover-Pfad
+        name: cover
+        widget: string
+        required: false
+        hint: Leer lassen, dann gilt das erste Foto des ersten Albums.
+      - label: Alben
+        name: alben
+        widget: list
+        summary: "{{fields.titel}}"
+        fields:
+          - { label: Titel, name: titel, widget: string }
+          - label: Anzahl Fotos
+            name: fotos
+            widget: number
+            value_type: int
+            min: 0
+            step: 1

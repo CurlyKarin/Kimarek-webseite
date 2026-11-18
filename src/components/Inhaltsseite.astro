@@ -1,0 +1,49 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import { bilderImOrdner, hintergrundAdresse } from '../lib/ordner';
+import Abschnitte from './Abschnitte.astro';
+import Fotoreihe from './Fotoreihe.astro';
+import Lichtkasten from './Lichtkasten.astro';
+import Seitenkopf from './Seitenkopf.astro';
+import Video from './Video.astro';
+
+interface Props {
+  seite: CollectionEntry<'seiten'>;
+}
+
+const { seite } = Astro.props;
+const abschnitte = (await getCollection('abschnitte'))
+  .filter((eintrag) => eintrag.data.seite === seite.id)
+  .sort((a, b) => a.data.order - b.data.order);
+const videos = (await getCollection('videos'))
+  .filter((eintrag) => eintrag.data.seiten.includes(seite.id))
+  .sort((a, b) => a.data.order - b.data.order);
+const fotos = await bilderImOrdner(seite.data.fotosOben);
+const collage = await bilderImOrdner(seite.data.collage);
+const hintergrund = hintergrundAdresse(seite.data.hintergrund);
+const bezeichnung = seite.data.fotosBezeichnung?.trim() || seite.data.title;
+const hatLicht = fotos.length > 0 || collage.length > 0;
+---
+
+<Base title={seite.data.title} description={seite.data.description} hintergrund={hintergrund}>
+  <article class="wrap feature">
+    <Seitenkopf seite={seite} title={seite.data.title} kicker={seite.data.kicker} text />
+    {fotos.length > 0 && <Fotoreihe label={bezeichnung} fotos={fotos.map((src) => ({ src, alt: '' }))} />}
+    <Abschnitte abschnitte={abschnitte} />
+    {videos.map((video) => <Video title={video.data.title} youtubeId={video.data.youtubeId} />)}
+    {
+      collage.length > 0 && (
+        <div class="collage">
+          {collage.map((src, index) => (
+            <button type="button" class="collage-open">
+              <img src={src} alt={`Foto ${index + 1}`} loading="lazy" />
+            </button>
+          ))}
+        </div>
+      )
+    }
+    {hatLicht && <Lichtkasten />}
+  </article>
+</Base>

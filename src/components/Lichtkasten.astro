@@ -1,48 +1,12 @@
----
-import { getEntry, render } from 'astro:content';
-import Fotoreihe from '../components/Fotoreihe.astro';
-import Seitenkopf from '../components/Seitenkopf.astro';
-import Base from '../layouts/Base.astro';
-import betreuer from '../data/betreuer.json';
-import { bild } from '../lib/bilder';
-import { pfad } from '../lib/pfad';
-
-const seite = await getEntry('seiten', 'betreuer');
-if (!seite) {
-  throw new Error('Betreuertext fehlt');
-}
-const { Content } = await render(seite);
-const wechsel = betreuer.wechsel.map((name) => bild(`betreuer/wechsel/${name}`));
-const collage = betreuer.collage.map((name) => bild(`betreuer/${name}`));
----
-
-<Base title={seite.data.title} description={seite.data.description} hintergrund={pfad('/media/zelt.jpg')}>
-  <article class="wrap feature">
-    <Seitenkopf title={seite.data.title} kicker={seite.data.kicker} />
-    <Fotoreihe label="Fotos des Betreuerteams" fotos={wechsel.map((src) => ({ src, alt: '' }))} />
-    <div class="prose team-copy">
-      <Content />
-    </div>
-    <div class="collage">
-      {
-        collage.map((src, index) => (
-          <button type="button" class="collage-open">
-            <img src={src} alt={`Betreuerfoto ${index + 1}`} />
-          </button>
-        ))
-      }
-    </div>
-    <dialog class="lightbox">
-      <button class="lightbox-close" type="button">Schließen</button>
-      <div class="lightbox-stage">
-        <button class="lightbox-prev" type="button" aria-label="Vorheriges Foto">←</button>
-        <img alt="" draggable="false" />
-        <button class="lightbox-next" type="button" aria-label="Nächstes Foto">→</button>
-      </div>
-      <p class="lightbox-count"></p>
-    </dialog>
-  </article>
-</Base>
+<dialog class="lightbox">
+  <button class="lightbox-close" type="button">Schließen</button>
+  <div class="lightbox-stage">
+    <button class="lightbox-prev" type="button" aria-label="Vorheriges Foto">←</button>
+    <img alt="" draggable="false" />
+    <button class="lightbox-next" type="button" aria-label="Nächstes Foto">→</button>
+  </div>
+  <p class="lightbox-count"></p>
+</dialog>
 
 <script>
   const collage = document.querySelector('.collage');
@@ -91,13 +55,16 @@ const collage = betreuer.collage.map((name) => bild(`betreuer/${name}`));
     });
   };
 
-  const ready = Promise.all(
-    [...(collage?.querySelectorAll('img') ?? [])].map((img) =>
-      img.decode().catch(() => undefined),
-    ),
-  );
-  ready.then(layout);
-  window.addEventListener('resize', layout);
+  let frame = 0;
+  const schedule = () => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(layout);
+  };
+  collage?.querySelectorAll('img').forEach((img) => {
+    if (!img.complete) img.addEventListener('load', schedule);
+  });
+  schedule();
+  window.addEventListener('resize', schedule);
 
   const dialog = document.querySelector('.lightbox');
   const view = dialog?.querySelector('img');

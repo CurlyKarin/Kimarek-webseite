@@ -15,15 +15,15 @@ Die Vorschau läuft danach auf [http://localhost:4321](http://localhost:4321).
 
 ## Bausteine
 
-Inhaltsseiten bestehen aus wenigen festen Bausteinen. Der Vorstand soll später Beiträge dieser Art anlegen, entfernen und umsortieren können. Überschrift, Menü, Fußzeile, Countdown, Impressum, Datenschutz und die Galerie-Jahre bleiben fest.
+Inhaltsseiten außer Startseite und Galerie bestehen aus denselben Bausteinen, in fester Reihenfolge. Der Vorstand legt Beiträge an, entfernt sie und sortiert sie. Überschrift, Menü, Fußzeile, Countdown, Impressum, Datenschutz und die Galerie-Jahre bleiben fest. Startseite und Galerie haben ihren eigenen Aufbau.
 
 | Baustein | Was er zeigt | Wo er heute liegt |
 | --- | --- | --- |
-| **Abschnitt** | Nur Text, Text und Foto, oder Foto und Text. Text und Foto sitzen in einem Kasten, der Abstand dazwischen hat dieselbe Fläche. | `src/components/Abschnitte.astro`, Beiträge in `src/content/geschichte`, `ablauf` und `vorstand` |
-| **Fotoreihe** | Ein Foto bleibt stehen. Mehrere wechseln alle drei Sekunden. Ein Klick öffnet dieselbe Ansicht wie in der Galerie, nur mit den Fotos dieser Reihe. | `src/components/Fotoreihe.astro`. Die Listen stehen noch in `src/data/gruppenfotos.json` und `betreuer.json`; das Zelt hat vorerst ein einzelnes Foto. |
-| **Collage** | Viele kleine Fotos, ohne Überschrift, offen auf dem Hintergrund. Ein Klick öffnet dieselbe Ansicht, nur für diese Fotos. Als eigener Baustein im Code noch nicht herausgelöst. | Direkt auf den Seiten Betreuer, Zelt, Kinderwoche und Jugendwoche. Die Dateinamen stehen in `src/data/betreuer.json`, `zelt.json`, `kinder.json` und `jugend.json`. |
-| **Album** | Eine Collage mit Überschrift. Titel und Fotos liegen zusammen auf heller Fläche. | Die Wochen der Galerie in `src/components/GalerieAnsicht.astro`. Die Titel stehen in `src/content/jahre`. |
-| **Video** | Titel und Standbild. Der Film startet erst beim Abspielen, über `youtube-nocookie.com`. Das Standbild kommt von YouTube. | `src/components/Video.astro`, Beiträge in `src/content/videos` |
+| **Titelfotos** | Höchstens eine Reihe direkt unter der Überschrift. Ein Ordner, oder der Pfad eines einzelnen Bildes. Ein Foto bleibt stehen, mehrere wechseln alle drei Sekunden. | Feld `fotosOben` an der Seite, gezeigt von `src/components/Fotoreihe.astro`. |
+| **Abschnitt** | Nur Text, Text und Foto, oder Foto und Text. Mehrere, unter den Titelfotos. Text und Foto sitzen in einem Kasten. | `src/components/Abschnitte.astro`, Beiträge in `src/content/abschnitte` |
+| **Video** | Titel und Standbild. Mehrere, unter den Abschnitten. Der Film startet erst beim Abspielen, über `youtube-nocookie.com`. | `src/components/Video.astro`, Beiträge in `src/content/videos` mit den Seiten, auf denen sie stehen |
+| **Collage** | Höchstens eine, ganz unten, ohne Überschrift, offen auf dem Hintergrund. Ein Ordner. | Feld `collage` an der Seite |
+| **Album** | Eine Collage mit Überschrift. Titel und Fotos liegen zusammen auf heller Fläche. | Nur die Wochen der Galerie in `src/components/GalerieAnsicht.astro` |
 
 Hat eine Collage einen Titel, ist sie ein Album und hell hinterlegt. Ohne Titel liegen die Fotos offen auf dem Hintergrund.
 
@@ -36,8 +36,8 @@ Alles, was der Vorstand später pflegen soll, liegt als Markdown unter `src/cont
 | Ordner | Inhalt |
 | --- | --- |
 | `termine` | Jahreszahlen, Wochen, Link zum Anmeldeportal und `saisonEnde`, der letzte Ferientag. Die Anmeldung startet immer am 1. Februar um 9 Uhr; der Countdown läuft bis dahin und beginnt erst nach `saisonEnde` neu. Solange die Anmeldung offen ist, steht das anstelle der Zahlen. |
-| `seiten` | Titel, Kurzbeschreibung und die kleine Zeile über der Überschrift |
-| `geschichte`, `ablauf`, `vorstand` | Abschnitte dieser Seiten |
+| `seiten` | Titel, Kurzbeschreibung, die kleine Zeile über der Überschrift, dazu Ordner für Titelfotos, Collage und Hintergrund |
+| `abschnitte` | Texte und Fotos der Inhaltsseiten, jeweils mit der Seite, zu der sie gehören |
 | `jahre` | Galerie-Jahre und die Anzahl der vorhandenen Fotos |
 | `videos` | YouTube-Filme |
 

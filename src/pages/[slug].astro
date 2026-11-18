@@ -1,24 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
-import Seitenkopf from '../components/Seitenkopf.astro';
-import Base from '../layouts/Base.astro';
+import Inhaltsseite from '../components/Inhaltsseite.astro';
 
 export async function getStaticPaths() {
   const seiten = await getCollection('seiten');
   return seiten
-    .filter(
-      (seite) =>
-        seite.id !== 'start' &&
-        seite.id !== 'vorstand' &&
-        seite.id !== 'betreuer' &&
-        seite.id !== 'geschichte' &&
-        seite.id !== 'zelt' &&
-        seite.id !== 'kinderwoche' &&
-        seite.id !== 'jugendwoche' &&
-        seite.id !== 'ablauf' &&
-        seite.id !== 'videos' &&
-        seite.id !== 'galerie',
-    )
+    .filter((seite) => seite.id !== 'start' && seite.id !== 'galerie')
     .map((seite) => ({
       params: { slug: seite.id },
       props: { seite },
@@ -28,8 +15,4 @@ export async function getStaticPaths() {
 const { seite } = Astro.props;
 ---
 
-<Base title={seite.data.title} description={seite.data.description}>
-  <article class="wrap">
-    <Seitenkopf seite={seite} title={seite.data.title} kicker={seite.data.kicker} text />
-  </article>
-</Base>
+<Inhaltsseite seite={seite} />

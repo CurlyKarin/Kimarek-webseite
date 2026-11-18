@@ -1,4 +1,5 @@
 ---
+seite: geschichte
 order: 2
 bild: geschichte/web/002.jpg
 alt: Blick von oben in die Manege während einer Vorstellung

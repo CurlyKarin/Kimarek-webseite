@@ -1,4 +1,5 @@
 ---
+seite: geschichte
 order: 3
 bild: geschichte/Bauwagen Aktion Jun 1998 Gr. Denkte-2.jpg
 alt: Roter Bauwagen mit Traktor bei einer Aktion in Groß Denkte im Juni 1998

@@ -40,6 +40,26 @@ collections:
         name: kicker
         widget: string
         required: false
+      - label: Titelfotos
+        name: fotosOben
+        widget: string
+        required: false
+        hint: Ordner im Bilderspeicher, zum Beispiel gruppenfotos/kinderwoche. Der Pfad eines einzelnen Bildes bleibt stehen. Leer lassen, wenn keine Titelfotos da sind.
+      - label: Bezeichnung der Titelfotos
+        name: fotosBezeichnung
+        widget: string
+        required: false
+        hint: Nur für die Vorlese-Software. Fehlt sie, gilt der Seitentitel.
+      - label: Collage
+        name: collage
+        widget: string
+        required: false
+        hint: Ordner im Bilderspeicher. Die Fotos stehen unten ohne Überschrift. Leer lassen, wenn keine Collage da ist.
+      - label: Hintergrund
+        name: hintergrund
+        widget: string
+        required: false
+        hint: Pfad eines Hintergrundfotos, zum Beispiel hintergruende/chappi.JPG. Leer lassen für die helle Fläche.
       - &text
         label: Text
         name: body
@@ -95,18 +115,35 @@ collections:
             field: { label: Vorstellung, name: vorstellung, widget: string }
       - *text
 
-  - name: geschichte
-    label: Geschichte
+  - name: abschnitte
+    label: Abschnitte
     label_singular: Abschnitt
-    folder: src/content/geschichte
+    description: Text, Text und Foto, oder Foto und Text. Gehört zu einer Seite und steht unter den Titelfotos.
+    folder: src/content/abschnitte
     extension: md
     format: frontmatter
     create: true
     delete: true
-    slug: "{{order}}"
-    summary: "{{filename}}"
-    sortable_fields: [order]
+    slug: "{{seite}}-{{order}}"
+    summary: "{{seite}}"
+    sortable_fields: [order, seite]
     fields: &abschnitt
+      - &seite
+        label: Seite
+        name: seite
+        widget: select
+        options: &seitenwahl
+          - { label: Betreuer, value: betreuer }
+          - { label: Das Zelt, value: zelt }
+          - { label: Kinderwoche, value: kinderwoche }
+          - { label: Jugendwoche, value: jugendwoche }
+          - { label: Ablauf, value: ablauf }
+          - { label: Vorstand, value: vorstand }
+          - { label: Seit 1987, value: geschichte }
+          - { label: Videos, value: videos }
+          - { label: Kontakt, value: kontakt }
+          - { label: Impressum, value: impressum }
+          - { label: Datenschutz, value: datenschutz }
       - &order
         label: Reihenfolge
         name: order
@@ -119,13 +156,13 @@ collections:
         name: bild
         widget: string
         required: false
-        hint: Pfad im Bilderspeicher, zum Beispiel geschichte/web/001.jpg. Oder ein lokaler Pfad wie /media/facebook.png. Dateien lädt diese Redaktion nicht hoch.
+        hint: Pfad im Bilderspeicher, zum Beispiel geschichte/web/001.jpg. Dateien lädt diese Redaktion nicht hoch.
       - &alt
         label: Alt-Text
         name: alt
         widget: string
         required: false
-        hint: Was auf dem Bild zu sehen ist. Pflicht, sobald ein Bildpfad steht. Leer lassen, wenn der Name daneben schon reicht.
+        hint: Was auf dem Bild zu sehen ist. Pflicht, sobald ein Bildpfad steht.
       - &zuerst
         label: Was zuerst kommt
         name: zuerst
@@ -136,36 +173,10 @@ collections:
           - { label: Foto, value: bild }
       - *text
 
-  - name: ablauf
-    label: Ablauf
-    label_singular: Abschnitt
-    folder: src/content/ablauf
-    extension: md
-    format: frontmatter
-    create: true
-    delete: true
-    slug: "{{order}}"
-    summary: "{{filename}}"
-    sortable_fields: [order]
-    fields: *abschnitt
-
-  - name: vorstand
-    label: Vorstand
-    label_singular: Abschnitt
-    folder: src/content/vorstand
-    extension: md
-    format: frontmatter
-    create: true
-    delete: true
-    slug: "{{order}}"
-    summary: "{{filename}}"
-    sortable_fields: [order]
-    fields: *abschnitt
-
   - name: videos
     label: Videos
     label_singular: Video
-    description: Nur die YouTube-Kennung. Der Film startet erst beim Abspielen.
+    description: Nur die YouTube-Kennung. Der Film startet erst beim Abspielen und steht auf den gewählten Seiten unter den Abschnitten.
     folder: src/content/videos
     extension: md
     format: frontmatter
@@ -182,6 +193,12 @@ collections:
         widget: string
         pattern: ['^[a-zA-Z0-9_-]{6,}$', "Nur die Kennung, nicht die ganze Adresse"]
         hint: Der Teil nach v=, zum Beispiel v9ecjMnAynw.
+      - label: Seiten
+        name: seiten
+        widget: select
+        multiple: true
+        min: 1
+        options: *seitenwahl
       - *order
 
   - name: aktuelles

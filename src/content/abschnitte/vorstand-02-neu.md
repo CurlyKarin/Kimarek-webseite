@@ -1,4 +1,5 @@
 ---
+seite: vorstand
 order: 2
 bild: vorstand/vorstand-neu.JPG
 alt: Der neue Vorstand, fünf Personen in Team-Shirts vor einer weißen Wand

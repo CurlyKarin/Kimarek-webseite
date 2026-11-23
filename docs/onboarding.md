@@ -83,7 +83,7 @@ Fotos von Kindern, Galerie, Team und Vorstand kommen nicht ins Repository und ni
 2. In der Redaktion beim Abschnitt unter **Bild** diesen Pfad eintragen und unter **Alt** einen kurzen Satz, was darauf zu sehen ist. Ohne Alt-Text schlägt der nächste Bau der Seite fehl.
 3. Speichern und die Vorschau neu laden.
 
-Titelfotos, Collagen und Galerie-Alben sind Ordner. Die Redaktion trägt den Ordner einmal ein, nicht einzelne Dateinamen. Weitere Fotos kommen in diesen Ordner im Bilderspeicher. Der nächste Bau der Seite liest den Ordner und zeigt die Bilder. Ein Speichern in der Redaktion stößt den Bau an.
+Titelfotos, Collagen und Galerie-Alben sind Ordner. Die Redaktion trägt den Ordner einmal ein, nicht einzelne Dateinamen. Weitere Fotos kommen in diesen Ordner im Bilderspeicher. Der nächste Bau der Seite liest den Ordner und zeigt die Bilder. Ein Speichern stößt den Bau an, sobald sich ein Eintrag geändert hat. Hat sich nichts geändert, bleibt Speichern inaktiv. Dann startet jemand mit Schreibrecht unter Actions die Action „Seite veröffentlichen“ über „Run workflow“.
 
 Bei der Galerie heißt der Ordner `galerie/2027/woche-1`, `galerie/2027/woche-2` oder `galerie/2027/jugendwoche`, mit dem jeweiligen Jahr.
 

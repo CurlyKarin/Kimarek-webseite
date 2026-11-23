@@ -47,7 +47,7 @@ Den Zugang für eine weitere Person beschreibt [docs/onboarding.md](docs/onboard
 
 ## Fotos
 
-Jahresfotos, Vorstands- und Teambilder kommen nicht in dieses Repository. Sie liegen im Bilderspeicher, derzeit der Bucket `kimarek-bilder`. Die Redaktion trägt den Ordner oder den Pfad ein. Beim Veröffentlichen liest der Bau die Ordner. Dafür liegen die Geheimnisse `CLOUDFLARE_ACCOUNT_ID` und `CLOUDFLARE_API_TOKEN` bei der Action. Ohne sie bleiben die Namenslisten unter `src/data` die Reserve. Das Quell-Zip der alten Seite liegt lokal im Ordner `_quelle` und wird nicht mitversioniert.
+Jahresfotos, Vorstands- und Teambilder kommen nicht in dieses Repository. Sie liegen im Bilderspeicher, derzeit der Bucket `kimarek-bilder`. Für Titelfotos, Collage und Album trägt die Redaktion den Ordner einmal ein. Ein neu hochgeladenes Foto in diesem Ordner übernimmt der nächste Bau. Den stößt ein Speichern an, sobald sich ein Eintrag geändert hat. Hat sich nichts geändert, bleibt Speichern inaktiv, und jemand mit Schreibrecht startet die Action „Seite veröffentlichen“ von Hand. Ein einzelnes Foto neben einem Text trägt sie als Pfad ein. Dafür liegen die Geheimnisse `CLOUDFLARE_ACCOUNT_ID` und `CLOUDFLARE_API_TOKEN` bei der Action. Das Quell-Zip der alten Seite liegt lokal im Ordner `_quelle` und wird nicht mitversioniert.
 
 ## Übernahme durch den Verein
 

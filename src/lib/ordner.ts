@@ -3,12 +3,13 @@ import gruppenfotos from '../data/gruppenfotos.json';
 import jugend from '../data/jugend.json';
 import kinder from '../data/kinder.json';
 import zelt from '../data/zelt.json';
-import { bild, bilderBasis } from './bilder';
+import { dateienAusBestand } from './bestand';
+import { bild } from './bilder';
 import { pfad } from './pfad';
 
 const bildDatei = /\.(jpe?g|png|webp|gif)$/i;
 
-/** Bekannte Dateinamen, solange der Bilderspeicher keine Ordnerliste herausgibt. */
+/** Reserve, wenn der Bau den Bilderspeicher nicht lesen kann. */
 const bekannt: Record<string, string[]> = {
   'betreuer/titelfotos': betreuer.wechsel,
   'betreuer/collage': betreuer.collage,
@@ -19,39 +20,8 @@ const bekannt: Record<string, string[]> = {
   'jugendwoche/titelfotos': gruppenfotos.jugendwoche,
 };
 
-let listeGeht: boolean | null = null;
-
 function sauber(angabe: string) {
   return angabe.trim().replace(/^\/+|\/+$/g, '');
-}
-
-async function speicherListet() {
-  if (listeGeht !== null) return listeGeht;
-  try {
-    const antwort = await fetch(`${bilderBasis}/?list-type=2&prefix=zelt/&max-keys=1`);
-    const text = await antwort.text();
-    listeGeht = antwort.ok && text.includes('<Key>');
-  } catch {
-    listeGeht = false;
-  }
-  return listeGeht;
-}
-
-async function dateienAusSpeicher(ordner: string) {
-  if (!(await speicherListet())) return null;
-  const prefix = `${ordner}/`;
-  const url = `${bilderBasis}/?list-type=2&prefix=${encodeURIComponent(prefix)}`;
-  const antwort = await fetch(url);
-  if (!antwort.ok) return null;
-  const text = await antwort.text();
-  const namen: string[] = [];
-  for (const fund of text.matchAll(/<Key>([^<]+)<\/Key>/g)) {
-    const key = fund[1].replaceAll('&amp;', '&');
-    if (!key.startsWith(prefix) || key.endsWith('/')) continue;
-    const name = key.slice(prefix.length);
-    if (!name.includes('/') && bildDatei.test(name)) namen.push(name);
-  }
-  return namen.sort((a, b) => a.localeCompare(b, 'de', { numeric: true }));
 }
 
 /** Bilder eines Ordners. Ein Pfad zu einer einzelnen Datei bleibt ein Bild. */
@@ -59,8 +29,8 @@ export async function bilderImOrdner(angabe?: string) {
   const clean = angabe ? sauber(angabe) : '';
   if (!clean) return [];
   if (bildDatei.test(clean)) return [bild(clean)];
-  const ausSpeicher = await dateienAusSpeicher(clean);
-  const namen = ausSpeicher && ausSpeicher.length > 0 ? ausSpeicher : (bekannt[clean] ?? []);
+  const ausBestand = await dateienAusBestand(clean);
+  const namen = ausBestand ?? bekannt[clean] ?? [];
   return namen.map((name) => bild(`${clean}/${name}`));
 }
 

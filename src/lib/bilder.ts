@@ -1,4 +1,5 @@
 import galerie from '../data/galerie.json';
+import { dateienAusBestand } from './bestand';
 
 /** Öffentliche Lesadresse des R2-Buckets. Die Dateien selbst liegen nicht im Repository. */
 export const bilderBasis = 'https://pub-e20229a8e04e4004b947e52e6c094b45.r2.dev';
@@ -28,22 +29,25 @@ export function bild(path: string) {
   return `${bilderBasis}/${clean.split('/').map(encodeURIComponent).join('/')}`;
 }
 
-export function albumDateien(year: number, titel: string) {
+export async function albumDateien(year: number, titel: string) {
   const ordner = albenOrdner[titel];
   if (!ordner) return [];
+  const ausBestand = await dateienAusBestand(`galerie/${year}/${ordner}`);
+  if (ausBestand) return ausBestand;
   return (galerie as Galerie)[String(year)]?.[ordner] ?? [];
 }
 
-export function albumBilder(year: number, titel: string) {
+export async function albumBilder(year: number, titel: string) {
   const ordner = albenOrdner[titel];
   if (!ordner) return [];
-  return albumDateien(year, titel).map((name) => bild(`galerie/${year}/${ordner}/${name}`));
+  const namen = await albumDateien(year, titel);
+  return namen.map((name) => bild(`galerie/${year}/${ordner}/${name}`));
 }
 
-export function jahresCover(year: number, alben: { titel: string }[], cover?: string) {
+export async function jahresCover(year: number, alben: { titel: string }[], cover?: string) {
   if (cover && cover.trim()) return bild(cover.trim());
   for (const album of alben) {
-    const [erstes] = albumBilder(year, album.titel);
+    const [erstes] = await albumBilder(year, album.titel);
     if (erstes) return erstes;
   }
   return undefined;

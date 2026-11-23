@@ -22,6 +22,24 @@ if (!aktiv) {
 }
 const pfadName = Astro.url.pathname.replace(/\/$/, '');
 const istUebersicht = pfadName.endsWith('/galerie');
+const karten = await Promise.all(
+  jahre.map(async (eintrag) => ({
+    year: eintrag.data.year,
+    href: pfad(`/galerie/${eintrag.data.year}`),
+    cover: await jahresCover(eintrag.data.year, eintrag.data.alben, eintrag.data.cover),
+    alben: eintrag.data.alben.map((album) => ({
+      titel: album.titel,
+      anker: albumAnker(album.titel),
+    })),
+  })),
+);
+const alben = await Promise.all(
+  aktiv.data.alben.map(async (album) => ({
+    titel: album.titel,
+    anker: albumAnker(album.titel),
+    bilder: await albumBilder(aktiv.data.year, album.titel),
+  })),
+);
 ---
 
 <Base
@@ -36,22 +54,14 @@ const istUebersicht = pfadName.endsWith('/galerie');
   <div class="wrap galerie-inhalt">
     <Jahre
       aktuell={aktiv.data.year}
-      jahre={jahre.map((eintrag) => ({
-        year: eintrag.data.year,
-        href: pfad(`/galerie/${eintrag.data.year}`),
-        cover: jahresCover(eintrag.data.year, eintrag.data.alben, eintrag.data.cover),
-        alben: eintrag.data.alben.map((album) => ({
-          titel: album.titel,
-          anker: albumAnker(album.titel),
-        })),
-      }))}
+      jahre={karten}
     />
     {
-      aktiv.data.alben.map((album) => (
-        <section class="album" id={albumAnker(album.titel)}>
+      alben.map((album) => (
+        <section class="album" id={album.anker}>
           <h2>{album.titel}</h2>
           <div class="collage">
-            {albumBilder(aktiv.data.year, album.titel).map((src, index) => (
+            {album.bilder.map((src, index) => (
               <button type="button" class="collage-open">
                 <img
                   src={src}

@@ -27,6 +27,9 @@ jobs:
       - run: npm run build
         env:
           BASE_PATH: /Kimarek-webseite
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_R2_BUCKET: kimarek-bilder
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

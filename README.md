@@ -43,13 +43,15 @@ Alles, was der Vorstand später pflegen soll, liegt als Markdown unter `src/cont
 
 Nach dem Speichern baut der Entwicklungsserver die Seite neu. Auf GitHub Pages passiert das nach einem Push auf `main` über die Action in `.github/workflows/deploy.yml`. Dafür muss in den Repository-Einstellungen GitHub Pages auf „GitHub Actions“ stehen.
 
+Den Zugang für eine weitere Person beschreibt [docs/onboarding.md](docs/onboarding.md).
+
 ## Fotos
 
-Jahresfotos, Vorstands- und Teambilder kommen nicht in dieses Repository. Sie sollen in einen Speicher des Vereins, zum Beispiel Cloudflare R2, und von den Galerieseiten nur verlinkt werden. Das Quell-Zip der alten Seite liegt lokal im Ordner `_quelle` und wird nicht mitversioniert.
+Jahresfotos, Vorstands- und Teambilder kommen nicht in dieses Repository. Sie liegen im Bilderspeicher, derzeit der Bucket `kimarek-bilder`. Die Redaktion trägt den Ordner oder den Pfad ein. Beim Veröffentlichen liest der Bau die Ordner. Dafür liegen die Geheimnisse `CLOUDFLARE_ACCOUNT_ID` und `CLOUDFLARE_API_TOKEN` bei der Action. Ohne sie bleiben die Namenslisten unter `src/data` die Reserve. Das Quell-Zip der alten Seite liegt lokal im Ordner `_quelle` und wird nicht mitversioniert.
 
 ## Übernahme durch den Verein
 
 1. Der Verein legt eine GitHub-Organisation an, kein persönliches Konto.
 2. Dieses Repository wird an die Organisation übertragen.
-3. Die Vorstandsleute werden Mitglieder und können die Markdown-Dateien ändern. Die Redaktion liegt unter `/admin` (Sveltia CMS). Lokal, bei laufendem `npm run dev`, öffnet man [http://127.0.0.1:4321/admin/index.html](http://127.0.0.1:4321/admin/index.html) und arbeitet am lokalen Repository. Die Anmeldung per GitHub kommt dazu, sobald der Verein die Organisation und die kleine Anmeldehilfe auf Cloudflare hat. Fotos lädt die Redaktion nicht hoch, sie trägt nur den Pfad im Bilderspeicher ein.
+3. Die Vorstandsleute werden Mitglieder und können die Markdown-Dateien ändern. Der Ablauf steht in [docs/onboarding.md](docs/onboarding.md). Die Anmeldung per GitHub kommt dazu, sobald der Verein die Organisation und die kleine Anmeldehilfe auf Cloudflare hat. Fotos lädt die Redaktion nicht hoch, sie trägt nur den Pfad im Bilderspeicher ein.
 4. Erst danach wird `www.kimarek.de` per DNS und `CNAME` auf das neue Repository gelegt. Gleichzeitig `vorschau` in `src/config.ts` auf `false` setzen.

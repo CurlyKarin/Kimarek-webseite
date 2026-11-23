@@ -53,7 +53,7 @@ Hat sie noch keins, öffnet sie die Einladung und legt das Konto mit derselben E
 
 ## In der Redaktion anmelden
 
-Die Redaktion ist die Adresse aus der Tabelle, im Browser. Es wird nichts heruntergeladen.
+Die Redaktion öffnet man im Browser unter https://curlykarin.github.io/Kimarek-webseite/admin/. Es wird nichts heruntergeladen. Wechselt die Adresse, steht die neue in der Tabelle oben.
 
 Solange die Anmeldung in der Tabelle „mit Token“ heißt, legt die Person einen Token an:
 

@@ -53,5 +53,5 @@ Jahresfotos, Vorstands- und Teambilder kommen nicht in dieses Repository. Sie li
 
 1. Der Verein legt eine GitHub-Organisation an, kein persönliches Konto.
 2. Dieses Repository wird an die Organisation übertragen.
-3. Die Vorstandsleute werden Mitglieder und können die Markdown-Dateien ändern. Der Ablauf steht in [docs/onboarding.md](docs/onboarding.md). Die Anmeldung per GitHub kommt dazu, sobald der Verein die Organisation und die kleine Anmeldehilfe auf Cloudflare hat. Fotos lädt die Redaktion nicht hoch, sie trägt nur den Pfad im Bilderspeicher ein.
+3. Die Vorstandsleute werden Mitglieder und können die Markdown-Dateien ändern. Der Ablauf steht in [docs/onboarding.md](docs/onboarding.md). Die Anmeldung per GitHub kommt dazu, sobald der Verein die Organisation und die kleine Anmeldehilfe auf Cloudflare hat. Fotos lädt die Redaktion bei Cloudflare in den Bilderspeicher. In der Redaktion trägt sie den Ordner oder den Pfad ein.
 4. Erst danach wird `www.kimarek.de` per DNS und `CNAME` auf das neue Repository gelegt. Gleichzeitig `vorschau` in `src/config.ts` auf `false` setzen.

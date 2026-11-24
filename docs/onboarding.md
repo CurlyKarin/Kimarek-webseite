@@ -29,13 +29,20 @@ Ein Konto allein darf das öffentliche Repository ansehen. Speichern geht erst n
 
 ## Einladung zum Repository
 
-Wer das Repository verwaltet, lädt die Person mit Schreibrecht ein.
+Wer das Repository verwaltet, lädt die Person ein. GitHub zeigt die Knöpfe auf Englisch.
 
-Liegt das Repository bei einer einzelnen Person: im Repository unter Einstellungen, Mitarbeiter, Person hinzufügen. Rolle **Schreiben**. Damit lassen sich Inhalte ändern. Einstellungen, Mitglieder und das Löschen des Repositorys bleiben bei der verwaltenden Person.
+Liegt das Repository bei einer einzelnen Person, wie jetzt `CurlyKarin/Kimarek-webseite`:
 
-Liegt das Repository in der Organisation des Vereins: die Person wird Mitglied der Organisation und bekommt Schreibrecht auf dem Repository der Website.
+1. https://github.com/CurlyKarin/Kimarek-webseite öffnen und dort angemeldet sein.
+2. Oben **Settings** wählen.
+3. Links unter **Access** auf **Collaborators** klicken. GitHub fragt dabei oft noch einmal nach dem Passwort oder einem Code.
+4. **Add people** wählen, den GitHub-Namen der Person eintippen, sie in der Liste anklicken und mit **Add … to this repository** bestätigen.
 
-Die Person nimmt die Einladung in der E-Mail an.
+Eine Rolle gibt es hier nicht. Die eingeladene Person darf Inhalte ändern. Einstellungen, weitere Einladungen und das Löschen des Repositorys bleiben bei der Inhaberin.
+
+Liegt das Repository in der Organisation des Vereins: ebenfalls **Settings**, links **Collaborators and teams**, dann **Add people**. Dort die Rolle **Write** wählen.
+
+Die Person nimmt die Einladung in der E-Mail oder unter ihren GitHub-Benachrichtigungen an. Bis dahin steht sie auf der Collaborators-Seite als ausstehend.
 
 ## Bilderspeicher
 
